@@ -6,7 +6,7 @@ applications:
   path: target/asrTrivial.war
   random-route: false
   routes:
-  - trivial-asr.eu-gb.mybluemix.net
+  - route: trivial-asr.eu-gb.mybluemix.net
   services:
   - rocky-cloudant-asr
   - rocky-language-translator-asr
