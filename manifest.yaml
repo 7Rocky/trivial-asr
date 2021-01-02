@@ -1,6 +1,11 @@
 applications:
 - buildpacks:
   - java_buildpack
+  disk_quota: 1G
+  domain: mybluemix.net
+  env:
+    JAVA_OPTS: -Xss228k -XX:ReservedCodeCacheSize=100M
+  instances: 1
   memory: 512M
   name: trivial-asr
   path: target/asrTrivial.war
@@ -10,3 +15,4 @@ applications:
   services:
   - rocky-cloudant-asr
   - rocky-language-translator-asr
+  stack: cflinuxfs3
