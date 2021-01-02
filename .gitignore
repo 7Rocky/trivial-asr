@@ -1,0 +1,38 @@
+/build/
+/target/
+/src/main/resources/*
+!/src/main/resources/*.template
+org.eclipse.*
+.DS_Store
+
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Maven file
+*.lst
+
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+#Target Maven
+target/
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*

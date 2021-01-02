@@ -1,0 +1,12 @@
+applications:
+- buildpacks:
+  - java_buildpack
+  env:
+    JAVA_OPTS: -Xss228k -XX:ReservedCodeCacheSize=100M
+  memory: 384M
+  name: rocky-tomcat-asr
+  path: target/asrTrivial.war
+  random-route: true
+  services:
+  - rocky-cloudant-asr
+  - rocky-language-translator-asr
