@@ -1,4 +1,4 @@
-package asr.proyectoFinal.services;
+package asr.trivial.services;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,9 +13,9 @@ import com.ibm.watson.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.language_translator.v3.model.TranslateOptions;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 
-import asr.proyectoFinal.dao.VCAPHelper;
+import asr.trivial.dao.VCAPHelper;
 
-public class Traductor {
+public class Translator {
   
   public static final String ENGLISH = Language.ENGLISH;
   public static final String SPANISH = Language.SPANISH;
@@ -25,20 +25,17 @@ public class Traductor {
   private static String apikey = "";
   
   public static String getApikey() {
-    if (Traductor.apikey.length() == 0) {
-      Traductor.apikey = createClient();
+    if (Translator.apikey.length() == 0) {
+      Translator.apikey = createClient();
     }
 
-    return Traductor.apikey;
+    return Translator.apikey;
   }
   
   private static String createClient() {
     String apikey;
 
     if (System.getenv("VCAP_SERVICES") != null) {
-      // When running in Bluemix, the VCAP_SERVICES env var will have the credentials
-      // for all bound/connected services
-      // Parse the VCAP JSON structure looking for cloudant.
       JsonObject watsonCredentials = VCAPHelper.getCloudCredentials("language_translator");
 
       if (watsonCredentials == null) {
@@ -48,11 +45,11 @@ public class Traductor {
 
       apikey = watsonCredentials.get("apikey").getAsString();
     } else {
-      System.out.println("Running locally. Looking for credentials in watson.properties");
-      apikey = VCAPHelper.getLocalProperties("watson.properties").getProperty("watson_apikey");
+      System.out.println("Running locally. Looking for credentials in language_translator.properties");
+      apikey = VCAPHelper.getLocalProperties("language_translator.properties").getProperty("language_translator_apikey");
 
       if (apikey == null || apikey.length() == 0) {
-        System.out.println("To use a language_translator, set the Watson apikey in src/main/resources/watson.properties");
+        System.out.println("To use a language_translator, set the Watson apikey in src/main/resources/language_translator.properties");
         return null;
       }
     }
@@ -61,7 +58,7 @@ public class Traductor {
   }
 
   public static String translate(String text, String language) {
-    Authenticator authenticator = new IamAuthenticator(Traductor.getApikey());
+    Authenticator authenticator = new IamAuthenticator(Translator.getApikey());
     LanguageTranslator languageTranslator = new LanguageTranslator("2018-05-01", authenticator);
 
     languageTranslator.setServiceUrl("https://gateway-lon.watsonplatform.net/language-translator/api");

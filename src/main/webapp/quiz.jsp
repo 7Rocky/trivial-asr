@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ page import="asr.proyectoFinal.dominio.Quiz" %>
-<%@ page import="asr.proyectoFinal.dominio.Question" %>
+<%@ page import="java.util.List" %>
+<%@ page import="asr.trivial.dominio.Quiz" %>
+<%@ page import="asr.trivial.dominio.Question" %>
 <!doctype html>
 <html>
   <head>
@@ -9,15 +10,17 @@
   </head>
   <body>
 	<%
-	  Quiz quiz = (Quiz) request.getAttribute("quiz");
+	  Quiz quiz = (Quiz) session.getAttribute("quiz");
+	  List<Question> questions = quiz.getQuestions();
 	
-	  for (Question question : quiz.getQuestions()) {
+	  for(int i = 0; i < questions.size(); i++) {
 	%>
-	<b><%= question.getQuestion() %></b>
+	<b><%= i + 1 %>: <%= questions.get(i).getQuestion() %></b>
+	<audio controls src="http://localhost:8080/asrTrivial/audio?q=<%= i %>"></audio>
 	<br>
 	<ul>
 	  <%	
-	    for (String answer : question.getAnswers()) {
+	    for (String answer : questions.get(i).getAnswers()) {
 	  %>
 	  <li><%= answer %></li>
 	  <%

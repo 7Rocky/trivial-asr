@@ -1,4 +1,4 @@
-package asr.proyectoFinal.dao;
+package asr.trivial.dao;
 
 /*******************************************************************************
  * Copyright (c) 2017 IBM Corp.
@@ -29,7 +29,7 @@ import com.cloudant.client.api.Database;
 
 import com.google.gson.JsonObject;
 
-import asr.proyectoFinal.dominio.Palabra;
+import asr.trivial.dominio.Palabra;
 
 public class CloudantPalabraStore {
 

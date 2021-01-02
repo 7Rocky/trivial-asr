@@ -1,4 +1,4 @@
-package asr.proyectoFinal.servlets;
+package asr.trivial.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import asr.proyectoFinal.dao.CloudantPalabraStore;
-import asr.proyectoFinal.dominio.Palabra;
-import asr.proyectoFinal.services.Traductor;
+import asr.trivial.dao.CloudantPalabraStore;
+import asr.trivial.dominio.Palabra;
+import asr.trivial.services.Translator;
 
 /**
  * Servlet implementation class Controller
  */
 @WebServlet(
   urlPatterns = {
-    "/listar", "/insertar", "/hablar"
+    "/listar", "/insertar"
   }
 )
 public class Controller extends HttpServlet {
@@ -53,7 +53,7 @@ public class Controller extends HttpServlet {
           if (store.getDB() == null) {
             out.println(String.format("Palabra: %s", palabra));
           } else {
-            palabra.setName(Traductor.translate(parametro, Traductor.FRENCH));
+            palabra.setName(Translator.translate(parametro, Translator.FRENCH));
             store.persist(palabra);
             out.println(String.format("Almacenada la palabra: %s", palabra.getName()));
           }

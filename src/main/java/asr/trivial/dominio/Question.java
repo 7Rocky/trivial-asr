@@ -1,4 +1,4 @@
-package asr.proyectoFinal.dominio;
+package asr.trivial.dominio;
 
 import java.util.ArrayList;
 import java.util.List;

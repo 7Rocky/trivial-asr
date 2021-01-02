@@ -2,21 +2,15 @@
 <!doctype html>
 <html>
   <head>
-    <title>Proyecto ASR</title>
+    <title>Trivial ASR</title>
     <meta charset="utf-8">
   </head>
   <body>
-    <h1>Ejemplo de Proyecto de ASR con Cloudant ahora con DevOps!!!</h1>
+    <h1>Trivial ASR</h1>
     <hr>
-    <p>
-      Opciones <b>CLOUDANT en IBM Cloud</b>:
-    </p>
     <ul>
       <li>
-        <a href="listar">Listar</a>
-      </li>
-      <li>
-        <a href="insertar?palabra=Rocky">Insertar Rocky</a>
+        <a href="quiz">Quiz</a>
       </li>
     </ul>
   </body>

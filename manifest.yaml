@@ -13,6 +13,8 @@ applications:
   routes:
   - route: trivial-asr.eu-gb.mybluemix.net
   services:
-  - rocky-cloudant-asr
-  - rocky-language-translator-asr
+  - trivial-asr-app-id
+  - trivial-asr-cloudant
+  - trivial-asr-language-translator
+  - trivial-asr-text-to-speech
   stack: cflinuxfs3
