@@ -116,7 +116,7 @@
           <version>2.6</version>
           <configuration>
             <failOnMissingWebXml>false</failOnMissingWebXml>
-            <warName>asrTomcatEjemploCloudant</warName>
+            <warName>asrTrivial</warName>
           </configuration>
         </plugin>
       </plugins>
