@@ -2,9 +2,9 @@ applications:
 - buildpacks:
   - java_buildpack
   disk_quota: 1G
-  domain: mybluemix.net
   env:
     JAVA_OPTS: -Xss228k -XX:ReservedCodeCacheSize=100M
+  health-check-type: port
   instances: 1
   memory: 512M
   name: trivial-asr
