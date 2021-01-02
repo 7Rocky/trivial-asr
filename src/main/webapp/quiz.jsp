@@ -16,7 +16,7 @@
 	  for(int i = 0; i < questions.size(); i++) {
 	%>
 	<b><%= i + 1 %>: <%= questions.get(i).getQuestion() %></b>
-	<audio controls src="/asrTrivial/audio?q=<%= i %>"></audio>
+	<audio controls src="audio?q=<%= i %>"></audio>
 	<br>
 	<ul>
 	  <%	
