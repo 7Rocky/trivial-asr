@@ -1,22 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ page import="java.util.List" %>
-<%@ page import="asr.trivial.dominio.Quiz" %>
-<%@ page import="asr.trivial.dominio.Question" %>
+<%@ page import="asr.trivial.domain.Question" %>
+<%@ page import="asr.trivial.domain.Quiz" %>
 <!doctype html>
 <html>
   <head>
     <title>Quiz</title>
-    <meta charset="utf">
+    <meta charset="utf-8">
+    <script>
+      const putAudio = button => {
+    	const number = button.previousElementSibling.children[0].textContent
+    	button.parentElement.innerHTML += '<audio autoplay controls src="audio?q=' + (number - 1) + '"></audio>'
+      }
+    </script>
   </head>
   <body>
 	<%
 	  Quiz quiz = (Quiz) session.getAttribute("quiz");
 	  List<Question> questions = quiz.getQuestions();
 	
-	  for(int i = 0; i < questions.size(); i++) {
+	  for (int i = 0; i < questions.size(); i++) {
 	%>
-	<b><%= i + 1 %>: <%= questions.get(i).getQuestion() %></b>
-	<audio controls src="audio?q=<%= i %>"></audio>
+	<div>
+      <b>
+	    <span class="question-number"><%= i + 1 %></span>: <span class="question"><%= questions.get(i).getQuestion() %></span>
+	  </b>
+      <button onclick="putAudio(this)">Get Audio</button>
+	</div>
 	<br>
 	<ul>
 	  <%	

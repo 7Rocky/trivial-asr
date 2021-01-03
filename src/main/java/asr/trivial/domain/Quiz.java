@@ -1,4 +1,4 @@
-package asr.trivial.dominio;
+package asr.trivial.domain;
 
 import java.util.ArrayList;
 import java.util.List;

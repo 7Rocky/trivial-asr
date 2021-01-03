@@ -1,5 +1,9 @@
 package asr.trivial.services;
 
+import java.util.Collection;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,20 +11,15 @@ import com.google.gson.JsonParser;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.IamAuthenticator;
 
-import com.ibm.watson.developer_cloud.language_translator.v3.util.Language;
-
 import com.ibm.watson.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.language_translator.v3.model.TranslateOptions;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 
 import asr.trivial.dao.VCAPHelper;
+import asr.trivial.domain.Quiz;
+import asr.trivial.domain.enums.SelectedLanguage;
 
 public class Translator {
-  
-  public static final String ENGLISH = Language.ENGLISH;
-  public static final String SPANISH = Language.SPANISH;
-  public static final String FRENCH = Language.FRENCH;
-  public static final String GERMAN = Language.GERMAN;
   
   private static String apikey = "";
   
@@ -56,8 +55,24 @@ public class Translator {
 
     return apikey;
   }
+  
+  public static void translate(Quiz quiz, final String language) {
+    quiz.getQuestions().stream().forEach(question -> {
+      question.setQuestion(translate(question.getQuestion(), language));
+      question.setCorrectAnswer(translate(question.getCorrectAnswer(), language));
+
+      Collection<String> newAnswers = question.getAnswers().stream()
+                                        .map(answer -> translate(answer, language))
+                                        .collect(Collectors.toCollection(TreeSet::new));
+      question.setAnswers(newAnswers);
+    });
+  }
 
   public static String translate(String text, String language) {
+    if (language.equals(SelectedLanguage.ENGLISH.getValue())) {
+      return text;
+    }
+
     Authenticator authenticator = new IamAuthenticator(Translator.getApikey());
     LanguageTranslator languageTranslator = new LanguageTranslator("2018-05-01", authenticator);
 
@@ -65,13 +80,11 @@ public class Translator {
 
     TranslateOptions translateOptions = new TranslateOptions.Builder()
       .addText(text)
-      .source(Language.ENGLISH)
+      .source(SelectedLanguage.ENGLISH.getValue())
       .target(language)
       .build();
 
     TranslationResult translationResult = languageTranslator.translate(translateOptions).execute().getResult();
-
-    System.out.println(translationResult);
 
     String translationJSON = translationResult.toString();
     JsonObject rootObj = JsonParser.parseString(translationJSON).getAsJsonObject();

@@ -17,42 +17,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import asr.trivial.dominio.Question;
-import asr.trivial.dominio.Quiz;
+import asr.trivial.domain.Question;
+import asr.trivial.domain.Quiz;
 
 public class Trivial {
-  
-  public static final int GENERAL_KNOWLEDGE =  9;
-  public static final int BOOKS = 10;
-  public static final int FILM = 11;
-  public static final int MUSIC = 12;
-  public static final int MUSICALS_AND_THEATRES = 13;
-  public static final int TELEVISION = 14;
-  public static final int VIDEO_GAMES = 15;
-  public static final int BOARD_GAMES = 16;
-  public static final int SCIENCE_AND_NATURE = 17;
-  public static final int COMPUTERS = 18;
-  public static final int MATHEMATICS = 19;
-  public static final int MYTHOLOGY = 20;
-  public static final int SPORTS = 21;
-  public static final int GEOGRAPHY = 22;
-  public static final int HISTORY = 23;
-  public static final int POLITICS = 24;
-  public static final int ART = 25;
-  public static final int CELEBRITIES = 26;
-  public static final int ANIMALS = 27;
-  public static final int VEHICLES = 28;
-  public static final int COMICS = 29;
-  public static final int GADGETS = 30;
-  public static final int ANIME_AND_MANGA = 31;
-  public static final int CARTOON_AND_ANIMATIONS = 32;
-  
-  public static final String EASY = "easy";
-  public static final String MEDIUM = "medium";
-  public static final String HARD = "hard";
-  
-  public static final String MULTIPLE = "multiple";
-  public static final String TRUE_FALSE = "boolean";
   
   private static final String API_URL = "https://opentdb.com/api.php";
   
@@ -77,7 +45,7 @@ public class Trivial {
       conn.setRequestProperty("Accept", "application/json");
 
       if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-          throw new RuntimeException("Failed: HTTP Error code: " + conn.getResponseCode());
+        throw new RuntimeException("Failed: HTTP Error code: " + conn.getResponseCode());
       }
 
       BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -94,8 +62,7 @@ public class Trivial {
         String correctAnswer = jsonQuestion.get("correct_answer").getAsString();
 
         List<String> answers = new ArrayList<>();
-        answers.add(correctAnswer);
-        
+
         Iterator<JsonElement> answersIt = jsonQuestion.getAsJsonArray("incorrect_answers").iterator();
         
         while(answersIt.hasNext()) {

@@ -16,6 +16,12 @@ package asr.trivial.dao;
  * limitations under the License.
  *******************************************************************************/
 
+import com.cloudant.client.api.ClientBuilder;
+import com.cloudant.client.api.CloudantClient;
+import com.cloudant.client.api.Database;
+
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
 
 import java.net.URL;
@@ -23,13 +29,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
-
-import com.google.gson.JsonObject;
-
-import asr.trivial.dominio.Palabra;
+import asr.trivial.domain.Palabra;
 
 public class CloudantPalabraStore {
 

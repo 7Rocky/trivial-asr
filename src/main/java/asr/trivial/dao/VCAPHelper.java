@@ -15,17 +15,18 @@
  *******************************************************************************/
 package asr.trivial.dao;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.Map.Entry;
 
 public class VCAPHelper {
 

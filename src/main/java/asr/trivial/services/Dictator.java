@@ -14,9 +14,7 @@ import com.ibm.watson.text_to_speech.v1.util.WaveUtils;
 import asr.trivial.dao.VCAPHelper;
 
 public class Dictator {
-  
-  public static final String ENGLISH = "en-US_AllisonV3Voice";
-  
+
   private static String apikey = "";
   private static String url = "";
   

@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import asr.trivial.dao.CloudantPalabraStore;
-import asr.trivial.dominio.Palabra;
+import asr.trivial.domain.Palabra;
+import asr.trivial.domain.enums.SelectedLanguage;
 import asr.trivial.services.Translator;
 
 /**
@@ -53,7 +54,7 @@ public class Controller extends HttpServlet {
           if (store.getDB() == null) {
             out.println(String.format("Palabra: %s", palabra));
           } else {
-            palabra.setName(Translator.translate(parametro, Translator.FRENCH));
+            palabra.setName(Translator.translate(parametro, SelectedLanguage.FRENCH.getValue()));
             store.persist(palabra);
             out.println(String.format("Almacenada la palabra: %s", palabra.getName()));
           }
