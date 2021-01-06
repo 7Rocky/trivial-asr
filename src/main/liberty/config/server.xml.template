@@ -1,9 +1,8 @@
 <!--
   These properties are meant for local development only and will not be read when application is running in Bluemix.
-  When  running in Bluemix, the credentials of bound services are available in the VCAP_SERVICES environment variable.
+  When running in Bluemix, the credentials of bound services are available in the VCAP_SERVICES environment variable.
   Remove the suffix ".template" to use this file properly
 -->
-# Remove the suffix ".template" to use this file properly
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="ASR Trivial">
   <featureManager>
@@ -40,7 +39,7 @@
     sslRef="oidcClientSSL"
     tokenEndpointAuthMethod="basic"
   />
-  <sslDefault sslRef="defaultSSLSettings" />
+  <sslDefault sslRef="oidcClientSSL" />
   <webApplication
     contextRoot="/"
     id="asr-trivial"

@@ -14,12 +14,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
-    <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
-    <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
+    <!-- <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
     <liberty.var.default.http.port>9080</liberty.var.default.http.port>
     <liberty.var.default.https.port>9443</liberty.var.default.https.port>
-    <liberty.var.app.context.root>/</liberty.var.app.context.root>
+    <liberty.var.app.context.root>/</liberty.var.app.context.root> -->
   </properties>
   <dependencies>
     <dependency>
@@ -90,35 +88,11 @@
       <plugin>
         <groupId>io.openliberty.tools</groupId>
         <artifactId>liberty-maven-plugin</artifactId>
-        <version>${version.liberty-maven-plugin}</version>
+        <version>3.1</version>
         <configuration>
           <serverName>defaultServer</serverName>
         </configuration>
       </plugin>
-      <!--<plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.2.0</version>
-        <executions>
-          <execution>
-            <id>copy-keystore-to-liberty</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <nonFilteredFileExtensions>
-                <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-              </nonFilteredFileExtensions>
-              <outputDirectory>target/liberty/wlp/usr/servers/defaultServer/resources/security</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/liberty/config/resources/security</directory>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>-->
     </plugins>
   </build>
 </project>
