@@ -5,7 +5,7 @@ d=`cf service-key trivial-asr-app-id Credentials | grep discoveryEndpoint | awk 
 sed -i "s/AppId-clientId/$c/g" wlp/usr/servers/defaultServer/server.xml
 sed -i "s/AppId-clientSecret/$s/g" wlp/usr/servers/defaultServer/server.xml
 sed -i "s%AppId-discoveryEndpointUrl%$d%g" wlp/usr/servers/defaultServer/server.xml
-sed -i "s%http://localhost:9080%https://rocky-liberty.eu-gb.mybluemix.net%g" wlp/usr/servers/defaultServer/server.xml
+sed -i "s%http://localhost:9080%https://trivial-asr.eu-gb.mybluemix.net%g" wlp/usr/servers/defaultServer/server.xml
 sed -i 's/httpsRequired="false"/httpsRequired="true"/g' wlp/usr/servers/defaultServer/server.xml
 
 zip -r asr.trivial.zip wlp
