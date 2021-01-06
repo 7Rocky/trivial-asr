@@ -1,0 +1,214 @@
+
+
+
+
+
+
+<!doctype html>
+<html>
+  <head>
+    <title>Trivial ASR</title>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="/img/favicon.ico" rel="shortcut icon">
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
+<link crossorigin="anonymous" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" rel="stylesheet">
+
+    <script>
+      const putAudio = button => {
+        const parent = button.parentElement
+        const number = parent.querySelector('.question-number').textContent
+
+        parent.innerHTML += '<audio autoplay controls src="audio?q=' + (number - 1) + '" style="top: 0; position: absolute; right: 0; margin: 2%;"></audio>'
+        parent.removeChild(parent.querySelector('button'))
+      }
+    </script>
+  </head>
+  <body class="container" style="background: #444;">
+    <div class="headerContainer">
+      <h1 class="text-white">- Trivia 2019 -</h1>
+    </div>
+    <div class="questionContainer">
+      <form action="results" id="quiz-form" method="post">
+        <div class="card bg-dark text-white border-info">
+          <div class="card-body">
+            <h4 class="card-title">
+              <div class="question-number text-center bg-info text-dark" style="width:36px; float:left; margin-right:20px;border-radius: 100%;">1</div>
+              <div>What is the first book of the Old Testament?</div>
+            </h4>
+            <button class="btn icon-btn text-white" onclick="putAudio(this)" style="top: 0; position: absolute; right: 0; margin: 2%;">
+              <i class="fas fa-volume-up h1"></i>
+            </button>
+            <div style="margin:12px 0">
+              <input class="form-check-input" id="1_1" name="question 1" type="radio" value="Exodus">
+              <label class="form-check-label" for="1_1">Exodus</label>
+            </div>
+            <div style="margin:12px 0">
+              <input class="form-check-input" id="1_2" name="question 1" type="radio" value="Genesis">
+              <label class="form-check-label" for="1_2">Genesis</label>
+              <u>ESTA</u>
+            </div>
+            <div style="margin:12px 0">
+              <input class="form-check-input" id="1_3" name="question 1" type="radio" value="Leviticus">
+              <label class="form-check-label" for="1_3">Leviticus</label>
+            </div>
+            <div style="margin:12px 0">
+              <input class="form-check-input" id="1_4" name="question 1" type="radio" value="Numbers">
+              <label class="form-check-label" for="1_4">Numbers</label>
+            </div>
+          </div>
+        </div>
+        
+          
+        
+        <br>
+        
+        <fieldset>
+          <legend>
+            <b>
+              <span class="question-number">2</span>:
+              <span class="question">Rolex is a company that specializes in what type of product?</span>
+            </b>
+            <button class="btn icon-btn" onclick="putAudio(this)">
+              <i class="fas fa-volume-up h1"></i>
+            </button>
+          </legend>
+          
+          <input class="form-check-input" id="2_1" name="question 2" type="radio" value="Cars">
+          <label class="form-check-label" for="2_1">Cars</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="2_2" name="question 2" type="radio" value="Computers">
+          <label class="form-check-label" for="2_2">Computers</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="2_3" name="question 2" type="radio" value="Sports equipment">
+          <label class="form-check-label" for="2_3">Sports equipment</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="2_4" name="question 2" type="radio" value="Watches">
+          <label class="form-check-label" for="2_4">Watches</label>
+          
+          <u>ESTA</u>
+          
+          <br>
+          
+        </fieldset>
+        <br>
+        
+        <fieldset>
+          <legend>
+            <b>
+              <span class="question-number">3</span>:
+              <span class="question">What alcoholic drink is made from molasses?</span>
+            </b>
+            <button class="btn icon-btn" onclick="putAudio(this)">
+              <i class="fas fa-volume-up h1"></i>
+            </button>
+          </legend>
+          
+          <input class="form-check-input" id="3_1" name="question 3" type="radio" value="Gin">
+          <label class="form-check-label" for="3_1">Gin</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="3_2" name="question 3" type="radio" value="Rum">
+          <label class="form-check-label" for="3_2">Rum</label>
+          
+          <u>ESTA</u>
+          
+          <br>
+          
+          <input class="form-check-input" id="3_3" name="question 3" type="radio" value="Vodka">
+          <label class="form-check-label" for="3_3">Vodka</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="3_4" name="question 3" type="radio" value="Whisky">
+          <label class="form-check-label" for="3_4">Whisky</label>
+          
+          <br>
+          
+        </fieldset>
+        <br>
+        
+        <fieldset>
+          <legend>
+            <b>
+              <span class="question-number">4</span>:
+              <span class="question">Which one of these Swedish companies was founded in 1943?</span>
+            </b>
+            <button class="btn icon-btn" onclick="putAudio(this)">
+              <i class="fas fa-volume-up h1"></i>
+            </button>
+          </legend>
+          
+          <input class="form-check-input" id="4_1" name="question 4" type="radio" value="Clas Ohlson">
+          <label class="form-check-label" for="4_1">Clas Ohlson</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="4_2" name="question 4" type="radio" value="H &amp;amp; M">
+          <label class="form-check-label" for="4_2">H &amp; M</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="4_3" name="question 4" type="radio" value="IKEA">
+          <label class="form-check-label" for="4_3">IKEA</label>
+          
+          <u>ESTA</u>
+          
+          <br>
+          
+          <input class="form-check-input" id="4_4" name="question 4" type="radio" value="Lindex">
+          <label class="form-check-label" for="4_4">Lindex</label>
+          
+          <br>
+          
+        </fieldset>
+        <br>
+        
+        <fieldset>
+          <legend>
+            <b>
+              <span class="question-number">5</span>:
+              <span class="question">Which of the following card games revolves around numbers and basic math?</span>
+            </b>
+            <button class="btn icon-btn" onclick="putAudio(this)">
+              <i class="fas fa-volume-up h1"></i>
+            </button>
+          </legend>
+          
+          <input class="form-check-input" id="5_1" name="question 5" type="radio" value="Go Fish">
+          <label class="form-check-label" for="5_1">Go Fish</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="5_2" name="question 5" type="radio" value="Munchkin">
+          <label class="form-check-label" for="5_2">Munchkin</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="5_3" name="question 5" type="radio" value="Twister">
+          <label class="form-check-label" for="5_3">Twister</label>
+          
+          <br>
+          
+          <input class="form-check-input" id="5_4" name="question 5" type="radio" value="Uno">
+          <label class="form-check-label" for="5_4">Uno</label>
+          
+          <u>ESTA</u>
+          
+          <br>
+          
+        </fieldset>
+        <br>
+        
+        <button class="submitButton" type="submit" form="quiz-form">Submit Quiz!</button>
+      </form>
+    </div>
+  </body>
+</html>

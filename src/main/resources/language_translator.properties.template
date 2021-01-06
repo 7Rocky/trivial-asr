@@ -1,4 +1,4 @@
 # These properties are meant for local development only and will not be read when application is running in Bluemix.
 # When  running in Bluemix, the credentials of bound services are available in the VCAP_SERVICES environment variable.
 # Remove the suffix ".template" to use this file properly
-language_translator_apikey=put_here_your_language_translator_apikey
+apikey=put_here_your_language_translator_apikey

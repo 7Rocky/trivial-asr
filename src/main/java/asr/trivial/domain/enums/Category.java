@@ -26,30 +26,50 @@ public enum Category {
   GADGETS(30, "Gadgets"),
   ANIME_AND_MANGA(31, "Anime and manga"),
   CARTOON_AND_ANIMATIONS(32, "Cartoon and animations");
-  
+
   private final int value;
   private final String text;
 
   private Category(int value, String text) {
-      this.value = value;
-      this.text = text;
+    this.value = value;
+    this.text = text;
   }
 
   public int getValue() {
-      return value;
+    return value;
   }
-  
+
   public String getText() {
     return text;
-}
-  
+  }
+
+  public static Category getCategory(int value) {
+    for (Category category : Category.values()) {
+      if (category.getValue() == value) {
+        return category;
+      }
+    }
+
+    return null;
+  }
+
+  public static Category getCategory(String text) {
+    for (Category category : Category.values()) {
+      if (category.getText().equals(text)) {
+        return category;
+      }
+    }
+
+    return null;
+  }
+
   public static boolean isValid(int value) {
     for (Category category : Category.values()) {
       if (category.getValue() == value) {
         return true;
       }
     }
-    
+
     return false;
   }
 

@@ -1,136 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
   <modelVersion>4.0.0</modelVersion>
-
-  <parent>
-    <groupId>net.wasdev.maven.parent</groupId>
-    <artifactId>java7-parent</artifactId>
-    <version>1.4</version>
-    <relativePath></relativePath>
-  </parent>
-
-  <groupId>net.wasdev.wlp.sample</groupId>
-  <artifactId>asrTrivial</artifactId>
+  <groupId>asr</groupId>
+  <artifactId>asr.trivial</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
-
-  <name>Bluemix Getting Started</name>
-  <url>https://bluemix.net</url>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>https://raw.github.com/WASdev/sample.servlet/master/LICENSE</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.apache.geronimo.specs</groupId>
-        <artifactId>geronimo-servlet_3.0_spec</artifactId>
-        <version>1.0</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
+    <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
+    <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
+    <liberty.var.default.http.port>9080</liberty.var.default.http.port>
+    <liberty.var.default.https.port>9443</liberty.var.default.https.port>
+    <liberty.var.app.context.root>/</liberty.var.app.context.root>
+  </properties>
   <dependencies>
-
+    <dependency>
+      <groupId>com.ibm.websphere.appserver.api</groupId>
+      <artifactId>com.ibm.websphere.appserver.api.security</artifactId>
+      <version>1.1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.websphere.appserver.api</groupId>
+      <artifactId>com.ibm.websphere.appserver.api.basics</artifactId>
+      <version>1.2.10</version>
+    </dependency>
     <dependency>
       <groupId>com.cloudant</groupId>
       <artifactId>cloudant-client</artifactId>
       <version>2.16.0</version>
     </dependency>
-
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>javax.ws.rs-api</artifactId>
-      <version>2.0</version>
-    </dependency>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet</artifactId>
       <version>2.25.1</version>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
       <version>2.25.1</version>
     </dependency>
-    
-	<dependency>
-	    <groupId>javax.ws.rs</groupId>
-	    <artifactId>javax.ws.rs-api</artifactId>
-	    <version>2.0</version>
-	</dependency>
-	
-	<dependency>
-	  <groupId>com.ibm.watson.developer_cloud</groupId>
-	  <artifactId>java-sdk</artifactId>
-	  <version>6.11.0</version>
-	</dependency>
-
-	<dependency>
-	    <groupId>com.google.code.gson</groupId>
-	    <artifactId>gson</artifactId>
-	    <version>2.8.6</version>
-	</dependency>
-
-	<dependency>
-	    <groupId>commons-io</groupId>
-	    <artifactId>commons-io</artifactId>
-	    <version>2.6</version>
-	</dependency>
-	
-	<dependency>
-  		<groupId>com.ibm.watson</groupId>
-  		<artifactId>language-translator</artifactId>
-  		<version>8.0.1</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>com.ibm.watson</groupId>
-	    <artifactId>ibm-watson</artifactId>
-	    <version>8.6.3</version>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.0</version>
     </dependency>
-
-	
+    <dependency>
+      <groupId>com.ibm.watson.developer_cloud</groupId>
+      <artifactId>java-sdk</artifactId>
+      <version>6.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.watson</groupId>
+      <artifactId>language-translator</artifactId>
+      <version>8.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.watson</groupId>
+      <artifactId>ibm-watson</artifactId>
+      <version>8.6.3</version>
+    </dependency>
   </dependencies>
-
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>2.6</version>
-          <configuration>
-            <failOnMissingWebXml>false</failOnMissingWebXml>
-            <warName>asrTrivial</warName>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
+        <groupId>io.openliberty.tools</groupId>
+        <artifactId>liberty-maven-plugin</artifactId>
+        <version>${version.liberty-maven-plugin}</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <serverName>defaultServer</serverName>
         </configuration>
       </plugin>
+      <!--<plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>copy-keystore-to-liberty</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <nonFilteredFileExtensions>
+                <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+              </nonFilteredFileExtensions>
+              <outputDirectory>target/liberty/wlp/usr/servers/defaultServer/resources/security</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/liberty/config/resources/security</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>-->
     </plugins>
   </build>
-
 </project>

@@ -20,21 +20,24 @@ import java.util.List;
 import asr.trivial.domain.Question;
 import asr.trivial.domain.Quiz;
 
+import asr.trivial.domain.enums.Category;
+import asr.trivial.domain.enums.Difficulty;
+
 public class Trivial {
-  
+
   private static final String API_URL = "https://opentdb.com/api.php";
-  
-  private static String queryString(int amount, int category, String difficulty, String type) {
+
+  private static String queryString(int category, String difficulty) {
     return new StringBuilder("?")
-      .append("amount=").append(amount).append("&")
+      .append("amount=").append(Quiz.AMOUNT).append("&")
       .append("category=").append(category).append("&")
       .append("dificulty").append(difficulty).append("&")
-      .append("type=").append(type).toString();
+      .append("type=").append(Quiz.TYPE).toString();
   }
-  
-  public static Quiz getTrivial(int amount, int category, String difficulty, String type) {
-    Quiz quiz = new Quiz();
-    String requestUrl = new StringBuilder(API_URL).append(queryString(amount, category, difficulty, type)).toString();
+
+  public static Quiz getTrivial(int category, String difficulty) {
+    Quiz quiz = new Quiz(Category.getCategory(category), Difficulty.getDifficulty(difficulty));
+    String requestUrl = new StringBuilder(API_URL).append(queryString(category, difficulty)).toString();
     HttpURLConnection conn = null;
 
     try {
@@ -52,9 +55,9 @@ public class Trivial {
 
       JsonObject response = JsonParser.parseString(br.readLine()).getAsJsonObject();
       JsonArray results = response.getAsJsonArray("results");
-      
+
       Iterator<JsonElement> questionsIt = results.iterator();
-      
+
       while (questionsIt.hasNext()) {
         JsonObject jsonQuestion = questionsIt.next().getAsJsonObject();
 
@@ -64,7 +67,7 @@ public class Trivial {
         List<String> answers = new ArrayList<>();
 
         Iterator<JsonElement> answersIt = jsonQuestion.getAsJsonArray("incorrect_answers").iterator();
-        
+
         while(answersIt.hasNext()) {
           answers.add(answersIt.next().getAsString());
         }

@@ -20,42 +20,17 @@ import asr.trivial.domain.Quiz;
 import asr.trivial.domain.enums.SelectedLanguage;
 
 public class Translator {
-  
+
   private static String apikey = "";
-  
+
   public static String getApikey() {
     if (Translator.apikey.length() == 0) {
-      Translator.apikey = createClient();
+      Translator.apikey = VCAPHelper.getProperty("language_translator", "apikey");
     }
 
     return Translator.apikey;
   }
-  
-  private static String createClient() {
-    String apikey;
 
-    if (System.getenv("VCAP_SERVICES") != null) {
-      JsonObject watsonCredentials = VCAPHelper.getCloudCredentials("language_translator");
-
-      if (watsonCredentials == null) {
-        System.out.println("No language_translator service bound to this application");
-        return null;
-      }
-
-      apikey = watsonCredentials.get("apikey").getAsString();
-    } else {
-      System.out.println("Running locally. Looking for credentials in language_translator.properties");
-      apikey = VCAPHelper.getLocalProperties("language_translator.properties").getProperty("language_translator_apikey");
-
-      if (apikey == null || apikey.length() == 0) {
-        System.out.println("To use a language_translator, set the Watson apikey in src/main/resources/language_translator.properties");
-        return null;
-      }
-    }
-
-    return apikey;
-  }
-  
   public static void translate(Quiz quiz, final String language) {
     quiz.getQuestions().stream().forEach(question -> {
       question.setQuestion(translate(question.getQuestion(), language));

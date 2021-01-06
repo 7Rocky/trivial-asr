@@ -1,7 +1,11 @@
 /build/
 /target/
+
+src/main/liberty/config/server.xml
+
 /src/main/resources/*
 !/src/main/resources/*.template
+
 org.eclipse.*
 .DS_Store
 

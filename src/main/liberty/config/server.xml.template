@@ -1,0 +1,57 @@
+<!--
+  These properties are meant for local development only and will not be read when application is running in Bluemix.
+  When  running in Bluemix, the credentials of bound services are available in the VCAP_SERVICES environment variable.
+  Remove the suffix ".template" to use this file properly
+-->
+# Remove the suffix ".template" to use this file properly
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="ASR Trivial">
+  <featureManager>
+    <feature>appSecurity-2.0</feature>
+    <feature>jsp-2.3</feature>
+    <feature>openidConnectClient-1.0</feature>
+    <feature>servlet-3.1</feature>
+    <feature>ssl-1.0</feature>
+    <feature>transportSecurity-1.0</feature>
+  </featureManager>
+  <httpEndpoint
+    host="*"
+    httpPort="9080"
+    httpsPort="9443"
+    id="defaultHttpEndpoint"
+  />
+  <keyStore
+    id="defaultKeyStore"
+    password="password"
+  />
+  <keyStore
+    id="digicertRootCA"
+    location="${server.config.dir}/resources/security/digicert-root-ca.jks"
+    password="digicert"
+  />
+  <openidConnectClient
+    clientId="AppId-clientId"
+    clientSecret="AppId-clientSecret"
+    discoveryEndpointUrl="AppId-discoveryEndpointUrl"
+    httpsRequired="false"
+    id="oidc-client-simple-liberty-web-app"
+    redirectToRPHostAndPort="http://localhost:9080"
+    signatureAlgorithm="RS256"
+    sslRef="oidcClientSSL"
+    tokenEndpointAuthMethod="basic"
+  />
+  <sslDefault sslRef="defaultSSLSettings" />
+  <webApplication
+    contextRoot="/"
+    id="asr-trivial"
+    location="asr.trivial.war"
+    name="asr-trivial"
+    type="war"
+  >
+    <application-bnd>
+      <security-role name="myrole">
+        <special-subject type="ALL_AUTHENTICATED_USERS" />
+      </security-role>
+    </application-bnd>
+  </webApplication>
+</server>

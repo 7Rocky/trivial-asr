@@ -1,6 +1,9 @@
-# Repositorio de la asignatura Arquitectura de Servicios en Red de 1º del Máster en Telecomunicación en la Escuela Técnica Superior de Ingeniería de ICAI (Universidad Pontificia Comillas)
-Ejemplo base de desarrollo de aplicaciones cloud nativas con IBM Cloud. 
+# Trivial ASR
 
-Disfrutando de la asignatura!
+```
+cd trivial-asr
+mvn clean install
+mvn liberty:dev -DskipTests=true
+```
 
-https://rocky-tomcat-asr.eu-gb.mybluemix.net
+https://trivial-asr.eu-gb.mybluemix.net
