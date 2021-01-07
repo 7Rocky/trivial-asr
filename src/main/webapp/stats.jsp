@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Map.Entry" %>
@@ -9,7 +9,7 @@
   <head>
     <%@ include file="head.jsp" %>
   </head>
-  <body style="background: #444">
+  <body>
     <%@ include file="navbar.jsp" %>
     <div class="container mb-5">
       <%
@@ -25,24 +25,24 @@
       <%
         }
       %>
-      <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="g-4 row row-cols-1 row-cols-md-3">
         <%
           for (Map.Entry<String, List<Integer>> entry : user.getStats().entrySet()) {
             int correct = entry.getValue().get(0);
-            int total = entry.getValue().get(1);
+            int done = entry.getValue().get(1);
             String colorClass = "";
             String message = "";
             String difficulty = "";
 
-            if (total == 0) {
+            if (done == 0) {
               colorClass = "primary";
               message = "Start Quiz!";
               difficulty = "easy";
-            } else if (100 * correct / total > 66) {
+            } else if (100 * correct / done > 66) {
               colorClass = "success";
               message = "Try Hard level!";
               difficulty = "hard";
-            } else if (100 * correct / total > 33) {
+            } else if (100 * correct / done > 33) {
               colorClass = "warning";
               message = "Try Medium level?";
               difficulty = "medium";
@@ -55,11 +55,11 @@
             int category = Category.getCategory(entry.getKey()).getValue();
         %>
         <div class="col col-md-4 col-xl-3">
-          <div class="card bg-dark text-white border-<%= colorClass %> text-center">
+          <div class="bg-dark border-<%= colorClass %> card text-center text-white">
             <div class="card-body">
               <h5 class="card-title"><%= entry.getKey() %></h5>
-              <p class="card-text text-<%= colorClass %>"><%= entry.getValue().get(0) %>/<%= entry.getValue().get(1) %></p>
-              <a href="quiz?category=<%= category %>&difficulty=<%= difficulty %>" class="btn btn-<%= colorClass %>"><%= message %></a>
+              <p class="card-text text-<%= colorClass %>"><%= correct %>/<%= done %></p>
+              <a class="btn btn-<%= colorClass %>" href="quiz?category=<%= category %>&difficulty=<%= difficulty %>"><%= message %></a>
             </div>
           </div>
         </div>

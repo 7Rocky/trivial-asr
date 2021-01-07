@@ -3,12 +3,15 @@
 <html>
   <head>
     <%@ include file="head.jsp" %>
-    <link href="style.css" rel="stylesheet">
   </head>
   <body>
-    Acertadas: ${correctlyAnswered}
-    <br>
-    <a href="/">Go to home</a>
-    <a href="/stats">View stats</a>
+    <%@ include file="navbar.jsp" %>
+    <div class="container">
+      Acertadas: ${correctlyAnswered}
+      <br>
+      <a href="/">Go to home</a>
+      <a href="/stats">View stats</a>
+    </div>
+    <%@ include file="footer.jsp" %>
   </body>
 </html>
