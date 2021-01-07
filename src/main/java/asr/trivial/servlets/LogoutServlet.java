@@ -1,4 +1,4 @@
-package asr.trivial.auth;
+package asr.trivial.servlets;
 
 import javax.servlet.ServletException;
 
