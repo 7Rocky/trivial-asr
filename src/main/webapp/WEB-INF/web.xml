@@ -5,11 +5,18 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 >
-  <display-name>Liberty Project</display-name>
+  <display-name>ASR Trivial</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error500.jsp</location>
+  </error-page>
   <security-role>
     <role-name>myrole</role-name>
   </security-role>
@@ -17,9 +24,7 @@
     <display-name>Security Constraints</display-name>
     <web-resource-collection>
       <web-resource-name>ProtectedArea</web-resource-name>
-      <!-- <url-pattern>/*</url-pattern>-->
       <url-pattern>/login</url-pattern>
-      <url-pattern>/api</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>myrole</role-name>
