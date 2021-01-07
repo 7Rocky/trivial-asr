@@ -1,14 +1,14 @@
-/build/
-/target/
-
 src/main/liberty/config/server.xml
 
 /src/main/resources/*
 !/src/main/resources/*.template
 
-org.eclipse.*
 .DS_Store
 
+# Eclipse
+.settings/
+.project
+.classpath
 
 # Compiled class file
 *.class
@@ -19,18 +19,16 @@ org.eclipse.*
 # Maven file
 *.lst
 
-
 # BlueJ files
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-#Target Maven
+# Target Maven
 target/
 
-
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
@@ -38,5 +36,5 @@ target/
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
