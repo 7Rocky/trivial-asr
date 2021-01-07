@@ -5,6 +5,7 @@ import java.util.List;
 
 import asr.trivial.domain.enums.Category;
 import asr.trivial.domain.enums.Difficulty;
+import asr.trivial.domain.enums.SelectedLanguage;
 
 public class Quiz {
 
@@ -13,6 +14,7 @@ public class Quiz {
 
   private Category category;
   private Difficulty difficulty;
+  private SelectedLanguage selectedLanguage = SelectedLanguage.ENGLISH;
   private List<Question> questions = new ArrayList<>(AMOUNT);
 
   public Quiz(Category category, Difficulty difficulty) {
@@ -28,6 +30,10 @@ public class Quiz {
     return difficulty;
   }
 
+  public SelectedLanguage getSelectedLanguage() {
+    return selectedLanguage;
+  }
+
   public List<Question> getQuestions() {
     return questions;
   }
@@ -38,6 +44,10 @@ public class Quiz {
 
   public void setDifficulty(Difficulty difficulty) {
     this.difficulty = difficulty;
+  }
+
+  public void setSelectedLanguage(SelectedLanguage selectedLanguage) {
+    this.selectedLanguage = selectedLanguage;
   }
 
   public void addQuestion(Question question) {

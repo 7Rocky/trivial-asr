@@ -5,12 +5,12 @@ import com.ibm.watson.developer_cloud.language_translator.v3.util.Language;
 public enum SelectedLanguage {
 
   ENGLISH(Language.ENGLISH, "English", "en-US_AllisonV3Voice"),
-  SPANISH(Language.SPANISH, "Spanish", "es-ES_LauraV3Voice"),
   FRENCH(Language.FRENCH, "French", "fr-FR_ReneeV3Voice"),
+  GERMAN(Language.GERMAN, "German", "de-DE_ErikaV3Voice"),
   ITALIAN(Language.ITALIAN, "Italian", "it-IT_FrancescaV3Voice"),
-  PORTUGUESE(Language.PORTUGUESE, "Portuguese", "pt-BR_IsabelaV3Voice"),
   JAPANESE(Language.JAPANESE, "Japanese", "ja-JP_EmiV3Voice"),
-  GERMAN(Language.GERMAN, "German", "de-DE_ErikaV3Voice");
+  PORTUGUESE(Language.PORTUGUESE, "Portuguese", "pt-BR_IsabelaV3Voice"),
+  SPANISH(Language.SPANISH, "Spanish", "es-ES_LauraV3Voice"),;
 
   private final String value;
   private final String text;
@@ -34,16 +34,6 @@ public enum SelectedLanguage {
     return voice;
   }
 
-  public static boolean isValid(String value) {
-    for (SelectedLanguage selectedLanguage : SelectedLanguage.values()) {
-      if (selectedLanguage.getValue().equals(value)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   public static SelectedLanguage getSelectedLanguage(String value) {
     for (SelectedLanguage selectedLanguage : SelectedLanguage.values()) {
       if (selectedLanguage.getValue().equals(value)) {
@@ -52,6 +42,16 @@ public enum SelectedLanguage {
     }
 
     return null;
+  }
+
+  public static boolean isValid(String value) {
+    for (SelectedLanguage selectedLanguage : SelectedLanguage.values()) {
+      if (selectedLanguage.getValue().equals(value)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 }

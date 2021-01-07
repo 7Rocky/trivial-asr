@@ -22,6 +22,7 @@ import asr.trivial.domain.Quiz;
 
 import asr.trivial.domain.enums.Category;
 import asr.trivial.domain.enums.Difficulty;
+import asr.trivial.domain.enums.SelectedLanguage;
 
 public class Trivial {
 
@@ -37,6 +38,8 @@ public class Trivial {
 
   public static Quiz getTrivial(int category, String difficulty) {
     Quiz quiz = new Quiz(Category.getCategory(category), Difficulty.getDifficulty(difficulty));
+    quiz.setSelectedLanguage(SelectedLanguage.ENGLISH);
+
     String requestUrl = new StringBuilder(API_URL).append(queryString(category, difficulty)).toString();
     HttpURLConnection conn = null;
 

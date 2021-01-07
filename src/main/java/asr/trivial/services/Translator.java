@@ -31,23 +31,27 @@ public class Translator {
     return Translator.apikey;
   }
 
-  public static void translate(Quiz quiz, final String language) {
+  public static void translate(Quiz quiz, final String toLanguage) {
+    String fromLanguage = quiz.getSelectedLanguage().getValue();
+
+    if (fromLanguage.equals(toLanguage)) {
+      return;
+    }
+
     quiz.getQuestions().stream().forEach(question -> {
-      question.setQuestion(translate(question.getQuestion(), language));
-      question.setCorrectAnswer(translate(question.getCorrectAnswer(), language));
+      question.setQuestion(translate(question.getQuestion(), fromLanguage, toLanguage));
+      question.setCorrectAnswer(translate(question.getCorrectAnswer(), fromLanguage, toLanguage));
 
       Collection<String> newAnswers = question.getAnswers().stream()
-                                        .map(answer -> translate(answer, language))
+                                        .map(answer -> translate(answer, fromLanguage, toLanguage))
                                         .collect(Collectors.toCollection(TreeSet::new));
       question.setAnswers(newAnswers);
     });
+
+    quiz.setSelectedLanguage(SelectedLanguage.getSelectedLanguage(toLanguage));
   }
 
-  public static String translate(String text, String language) {
-    if (language.equals(SelectedLanguage.ENGLISH.getValue())) {
-      return text;
-    }
-
+  public static String translate(String text, String fromLanguage, String toLanguage) {
     Authenticator authenticator = new IamAuthenticator(Translator.getApikey());
     LanguageTranslator languageTranslator = new LanguageTranslator("2018-05-01", authenticator);
 
@@ -55,8 +59,8 @@ public class Translator {
 
     TranslateOptions translateOptions = new TranslateOptions.Builder()
       .addText(text)
-      .source(SelectedLanguage.ENGLISH.getValue())
-      .target(language)
+      .source(fromLanguage)
+      .target(toLanguage)
       .build();
 
     TranslationResult translationResult = languageTranslator.translate(translateOptions).execute().getResult();

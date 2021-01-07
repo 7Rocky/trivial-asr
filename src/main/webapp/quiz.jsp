@@ -4,59 +4,64 @@
 <%@ page import="java.util.List" %>
 <%@ page import="asr.trivial.domain.Question" %>
 <%@ page import="asr.trivial.domain.Quiz" %>
+<%@ page import="asr.trivial.domain.enums.SelectedLanguage" %>
 <!doctype html>
 <html>
   <head>
     <%@ include file="head.jsp" %>
-    <script>
-      const putAudio = button => {
-        const parent = button.parentElement
-        const number = parent.querySelector('.question-number').textContent
-
-        parent.innerHTML += '<audio autoplay controls src="audio?q=' + (number - 1) + '" style="top: 0; position: absolute; right: 0; margin: 2%;"></audio>'
-        parent.removeChild(parent.querySelector('button'))
-      }
-    </script>
   </head>
-  <body style="background: #444">
+  <body>
     <%@ include file="navbar.jsp" %>
     <div class="container">
       <%
         Quiz quiz = (Quiz) session.getAttribute("quiz");
       %>
-      <div>
-        <h1 class="text-white"><%= quiz.getCategory().getText() %></h1>
-        <!-- <h1 class="text-white"><%= quiz.getDifficulty().getText() %></h1> -->
+      <div class="row justify-content-between">
+        <h1 class="col-9 text-white">
+          <span><%= quiz.getCategory().getText() %></span>
+          <span class="badge bg-info text-dark"><%= quiz.getDifficulty().getText() %></span>
+        </h1>
+        <div class="col-3 dropdown">
+          <button aria-expanded="false" class="btn btn-lg btn-secondary dropdown-toggle float-right" data-bs-toggle="dropdown" id="dropdown-languages" type="button"><%= quiz.getSelectedLanguage().getText() %></button>
+          <ul class="bg-dark dropdown-menu" aria-labelledby="dropdown-languages">
+            <%
+              for (SelectedLanguage selectedLanguage : SelectedLanguage.values()) {
+            %>
+            <li>
+              <a class="dropdown-item <%= selectedLanguage.getValue().equals(SelectedLanguage.ENGLISH.getValue()) ? "bg-info text-dark" : "bg-dark text-white" %>" href="#" id="<%= selectedLanguage.getValue() %>" onclick="loadQuiz(this)"><%= selectedLanguage.getText() %></a>
+            </li>
+            <%
+              }
+            %>
+          </ul>
+        </div>
       </div>
-      <div class="questionContainer">
-        <form action="results" id="quiz-form" method="post">
-          <%
-            List<Question> questions = quiz.getQuestions();
+      <form action="results" id="quiz-form" method="post">
+        <%
+          List<Question> questions = quiz.getQuestions();
 
-            for (int i = 0; i < questions.size(); i++) {
-          %>
-          <div class="card bg-dark text-white border-info mt-4">
-            <div class="card-body">
+          for (int i = 0; i < questions.size(); i++) {
+        %>
+        <div class="bg-dark border-info card mt-4 text-white">
+          <div class="card-body d-flex">
+            <div class="p-2 w-100">
               <h4 class="card-title">
-                <div class="question-number text-center bg-info text-dark" style="width:36px; float:left; margin-right:20px;border-radius: 100%;"><%= i + 1 %></div>
-                <div><%= questions.get(i).getQuestion() %></div>
+                <span class="badge bg-info question-number rounded-pill text-center text-dark"><%= i + 1 %></span>
+                <span class="question"><%= questions.get(i).getQuestion() %></span>
               </h4>
-              <button class="btn icon-btn text-white" onclick="putAudio(this)" style="top: 0; position: absolute; right: 0; margin: 2%;">
-                <i class="fas fa-volume-up h1"></i>
-              </button>
               <%
                 int j = 0;
 
                 for (String answer : questions.get(i).getAnswers()) {
                   j++;
               %>
-              <div style="margin:12px 0">
+              <div class="my-2">
                 <input class="form-check-input" id="<%= i + 1 %>_<%= j %>" name="question <%= i + 1 %>" type="radio" value="<c:out value="<%= answer %>"/>">
                 <label class="form-check-label" for="<%= i + 1 %>_<%= j %>"><%= answer %></label>
                 <%
                   if (answer.equals(questions.get(i).getCorrectAnswer())) {
                 %>
-                <u>ESTA</u>
+                --- ESTA ---
                 <%
                   }
                 %>
@@ -65,17 +70,20 @@
                 }
               %>
             </div>
-          </div>
-          <%
-            }
-          %>
-          <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-info btn-lg my-5" type="submit" form="quiz-form">
-              <b>Submit Quiz!</b>
+            <button class="align-self-center btn d-flex text-white" onclick="putAudio(this)">
+              <i class="fas fa-volume-up h1"></i>
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+        <%
+          }
+        %>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-info btn-lg my-5" form="quiz-form" type="submit">
+            <b>Submit Quiz!</b>
+          </button>
+        </div>
+      </form>
     </div>
     <%@ include file="footer.jsp" %>
   </body>
