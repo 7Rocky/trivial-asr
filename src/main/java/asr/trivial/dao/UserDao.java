@@ -16,7 +16,7 @@ import asr.trivial.domain.User;
 public class UserDao {
 
   private Database db = null;
-  private static final String databaseName = VCAPHelper.isProdEnv() ? "users-test" : "users-test";
+  private static final String databaseName = VCAPHelper.isProdEnv() ? "users" : "users-test";
 
   public UserDao() {
     CloudantClient cloudant = createClient();
@@ -35,7 +35,6 @@ public class UserDao {
     CloudantClient client = null;
 
     try {
-      System.out.println("Connecting to Cloudant");
       client = ClientBuilder.url(new URL(url)).build();
     } catch (Exception e) {
       System.out.println("Unable to connect to database");
@@ -59,7 +58,11 @@ public class UserDao {
   }
   
   public User getBySub(String sub) {
-    List<User> users = db.query("{\"selector\":{\"sub\":\"" + sub + "\"}}", User.class).getDocs();
+    List<User> users = db.query(
+        new StringBuilder("{\"selector\":{\"sub\":\"").append(sub).append("\"}}").toString(),
+        User.class
+      )
+      .getDocs();
 
     if (users.isEmpty()) {
       return null;
@@ -80,15 +83,6 @@ public class UserDao {
     db.update(visitor);
 
     return db.find(User.class, id);
-  }
-/*
-  public void delete(String id) {
-    Palabra visitor = db.find(Palabra.class, id);
-    db.remove(id, visitor.get_rev());
-  }*/
-
-  public int count() throws Exception {
-    return getAll().size();
   }
 
 }

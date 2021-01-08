@@ -38,6 +38,7 @@ public class ResultsServlet extends HttpServlet {
     if (request.getRemoteUser() != null) {
       String sub = ((User) request.getSession().getAttribute("user")).getSub();
       User user = store.getBySub(sub);
+
       user.updateStats(quiz.getCategory(), correctlyAnswered);
       store.update(user.get_id(), user);
     }

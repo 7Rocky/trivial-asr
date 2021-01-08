@@ -1,6 +1,6 @@
 package asr.trivial.domain.enums;
 
-import com.ibm.watson.developer_cloud.language_translator.v3.util.Language;
+import com.ibm.watson.language_translator.v3.util.Language;
 
 public enum SelectedLanguage {
 

@@ -10,6 +10,7 @@ import asr.trivial.domain.enums.Category;
 public class User {
 
   public static final String ALL_USERS_SUB = "all_users_sub";
+  public static final String DEFAULT_PICTURE = "/img/user.png";
 
   private String _id;
   private String _rev;
@@ -28,15 +29,6 @@ public class User {
     this.setEmail(email);
     this.setPicture(picture);
     this.initStats();
-  }
-
-  @Override
-  public String toString() {
-    return new StringBuilder("Name: ").append(givenName).append("\n")
-      .append("Family name: ").append(familyName).append("\n")
-      .append("Email: ").append(email).append("\n")
-      .append("sub: ").append(sub).append("\n")
-      .append("Stats: ").append(stats).append("\n").toString();
   }
 
   private void initStats() {

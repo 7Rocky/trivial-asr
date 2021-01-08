@@ -5,7 +5,7 @@
 <%@ page import="asr.trivial.domain.User" %>
 <%@ page import="asr.trivial.domain.enums.Category" %>
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <%@ include file="head.jsp" %>
   </head>
@@ -17,11 +17,11 @@
 
         if (user.getSub().equals(User.ALL_USERS_SUB)) {
       %>
-      <h1 class="text-white">Global stats of all users</h1>
+      <h1 class="text-white mb-4">Global stats of all users</h1>
       <%
         } else {
       %>
-      <h1 class="text-white">These are your stats, <%= user.getGivenName() %></h1>
+      <h1 class="text-white mb-4">These are your stats, <%= user.getGivenName() %></h1>
       <%
         }
       %>
@@ -35,7 +35,7 @@
             String difficulty = "";
 
             if (done == 0) {
-              colorClass = "primary";
+              colorClass = "info";
               message = "Start Quiz!";
               difficulty = "easy";
             } else if (100 * correct / done > 66) {
@@ -54,7 +54,7 @@
 
             int category = Category.getCategory(entry.getKey()).getValue();
         %>
-        <div class="col col-md-4 col-xl-3">
+        <div class="col col-md-6 col-lg-4 col-xl-3">
           <div class="bg-dark border-<%= colorClass %> card text-center text-white">
             <div class="card-body">
               <h5 class="card-title"><%= entry.getKey() %></h5>

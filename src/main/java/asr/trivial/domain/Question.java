@@ -44,11 +44,6 @@ public class Question {
     this.answers.addAll(answers);
   }
 
-  public void replaceAnswer(String oldAnswer, String newAnswer) {
-    this.answers.remove(oldAnswer);
-    this.answers.add(newAnswer);
-  }
-
   public void setAnswers(Collection<String> answers) {
     this.answers = answers;
   }

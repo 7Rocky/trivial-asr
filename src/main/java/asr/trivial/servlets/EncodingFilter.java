@@ -1,7 +1,5 @@
 package asr.trivial.servlets;
 
-import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -10,6 +8,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import javax.servlet.annotation.WebFilter;
+
+import java.io.IOException;
 
 @WebFilter(urlPatterns="/*")
 public class EncodingFilter implements Filter {
@@ -20,10 +20,8 @@ public class EncodingFilter implements Filter {
     chain.doFilter(request, response);
   }
 
-  @Override
   public void init(FilterConfig filterConfig) throws ServletException { }
 
-  @Override
   public void destroy() { }
 
 }

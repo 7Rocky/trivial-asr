@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" pageEncoding="utf-8" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="asr.trivial.domain.Question" %>
 <%@ page import="asr.trivial.domain.Quiz" %>
 <%@ page import="asr.trivial.domain.enums.SelectedLanguage" %>
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <%@ include file="head.jsp" %>
   </head>
@@ -45,7 +44,7 @@
         <div class="bg-dark border-info card mt-4 text-white">
           <div class="card-body d-flex">
             <div class="p-2 w-100">
-              <h4 class="card-title">
+              <h4 class="card-title mb-4">
                 <span class="badge bg-info question-number rounded-pill text-center text-dark"><%= i + 1 %></span>
                 <span class="question"><%= questions.get(i).getQuestion() %></span>
               </h4>
@@ -55,16 +54,9 @@
                 for (String answer : questions.get(i).getAnswers()) {
                   j++;
               %>
-              <div class="my-2">
+              <div class="my-3">
                 <input class="form-check-input" id="<%= i + 1 %>_<%= j %>" name="question <%= i + 1 %>" type="radio" value="<c:out value="<%= answer %>"/>">
                 <label class="form-check-label" for="<%= i + 1 %>_<%= j %>"><%= answer %></label>
-                <%
-                  if (answer.equals(questions.get(i).getCorrectAnswer())) {
-                %>
-                --- ESTA ---
-                <%
-                  }
-                %>
               </div>
               <%
                 }
