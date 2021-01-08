@@ -52,6 +52,6 @@ cf logout
 
 For this task, you have to enable [Continuous Delivery](https://www.ibm.com/cloud/continuous-delivery) in the Cloud Foundry application, from IBM Cloud. You will need to specify the Git URL and the commands to execute on the stages you define.
 
-This is the advanced levell. If you have arrived here, sure you know how to configure CI/CD in your application.
+This is the advanced level. If you have arrived here, sure you know how to configure CI/CD in your application.
 
 Hope it is useful! :smile:
