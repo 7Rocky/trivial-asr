@@ -1,5 +1,12 @@
+:root{
+  --background-color-body: #444;
+  --dark-theme-color: #1e2125;
+  --light-theme-color: #f8f9fa;
+  --line-height-text: 24px;
+  --width-label: 80%;
+}
 body {
-  background-color: #444;
+  background-color: var(--background-color-body);
 }
 a.dropdown-toggle::after {
   display: none !important;
@@ -11,20 +18,38 @@ a.dropdown-toggle::after {
   border-radius: 100%;
 }
 .dropdown-menu a:hover {
-  background-color: #f8f9fa !important;
-  color: #1e2125 !important;
+  background-color: var(--light-theme-color) !important;
+  color: var(--dark-theme-color) !important;
 }
 .question-number {
   width: 36px;
 }
 .img-blurred-edge {
   background-color: #000;
-  box-shadow: 0 0 20px 20px #444 inset;
+  box-shadow: 0 0 20px 20px var(--background-color-body) inset;
   padding: 10%;
   width: 100%;
 }
 .img-blurred-edge img {
   width: 90%;
+}
+.form-check-input {
+  height: var(--line-height-text);
+  margin: 0 6px;
+  width: var(--line-height-text);
+}
+.spinner-border {
+  height: var(--line-height-text);
+  width: var(--line-height-text);
+}
+.form-check-label {
+  max-width: var(--width-label);
+}
+.loading-answers {
+  background-color: var(--background-color-body);
+  width: var(--width-label);
+  -webkit-transition: width 1s;
+  transition: width 1s;
 }
 .float-right {
   float: right;

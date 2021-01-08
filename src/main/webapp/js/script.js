@@ -1,19 +1,51 @@
-const loadingData = () => {
+let animation
+
+const startLoading = () => {
+  const button = document.getElementById('dropdown-languages')
+  button.disabled = true
+
+  removeAudios()
+
+  document.querySelectorAll('.fa-volume-up')
+    .forEach(i => i.parentNode.disabled = true)
+
   document.querySelectorAll('h4 .question')
-    .forEach(h4 => {
-      h4.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>'
+    .forEach(span => {
+      span.innerHTML = '<div class="ms-3 spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>'
     })
 
   document.querySelectorAll('label')
     .forEach(label => {
-      label.innerHTML = '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>'
+      label.innerHTML = '&nbsp;'
+      label.classList.add('loading-answers')
+    })
+
+  animation = setInterval(() => {
+    document.querySelectorAll('label')
+      .forEach(label => label.style.width = 80 * Math.random() + '%')
+  }, 500)
+}
+
+const stopLoading = () => {
+  clearInterval(animation)
+
+  const button = document.getElementById('dropdown-languages')
+  button.disabled = false
+
+  document.querySelectorAll('.fa-volume-up').forEach(i => i.parentNode.disabled = false)
+
+  document.querySelectorAll('label')
+    .forEach(label => {
+      label.style.width = ''
+      label.classList.remove('loading-answers')
     })
 }
 
 const putAudio = button => {
   const parent = button.parentElement
   const number = parent.querySelector('.question-number').textContent
-  const audio = new Audio(`audio?q=${number - 1}`)
+  const audio = new Audio(`audio?q=${number - 1}&v=${Math.random()}`)
+
   audio.controls = true
   audio.autoplay = true
 
@@ -21,11 +53,19 @@ const putAudio = button => {
   parent.removeChild(parent.querySelector('button'))
 }
 
-const decodeHtml = html => {
-  let areaElement = document.createElement("textarea");
-  areaElement.innerHTML = html;
+const removeAudios = () => {
+  document.querySelectorAll('audio')
+    .forEach(audio => {
+      audio.parentNode.insertAdjacentHTML('afterend', '<button class="align-self-center btn d-flex text-white" onclick="putAudio(this)"><i class="fas fa-volume-up h1"></i></button>')
+      audio.parentNode.removeChild(audio)
+    })
+}
 
-  return areaElement.value;
+const decodeHtml = html => {
+  let textarea = document.createElement('textarea')
+  textarea.innerHTML = html
+
+  return textarea.value
 }
 
 const selectLanguage = language => {
@@ -34,42 +74,49 @@ const selectLanguage = language => {
 
   button.textContent = language
 
-  ul.querySelectorAll('a').forEach(a => {
-    if (a.textContent === language) {
-      a.classList.replace('text-white', 'text-dark')
-      a.classList.replace('bg-dark', 'bg-info')
-    } else {
-      a.classList.replace('text-dark', 'text-white')
-      a.classList.replace('bg-info', 'bg-dark')
-    }
-  })
+  ul.querySelectorAll('a')
+    .forEach(a => {
+      if (a.textContent === language) {
+        a.classList.replace('text-white', 'text-dark')
+        a.classList.replace('bg-dark', 'bg-info')
+      } else {
+        a.classList.replace('text-dark', 'text-white')
+        a.classList.replace('bg-info', 'bg-dark')
+      }
+    })
 }
 
 const loadQuiz = async a => {
-  selectLanguage(a.textContent)
+  const language = a.textContent
+  selectLanguage(language)
 
-  const button = document.getElementById('dropdown-languages')
-  button.disabled = true
+  startLoading()
 
-  animation = true
-  loadingData()
+  const id = a.id
+  const questions = await getQuestions(id)
 
-  const language = a.id
-  const res = await fetch(`questions?language=${language}`)
+  stopLoading()
+
+  renderQuiz(questions) 
+}
+
+const getQuestions = async id => {
+  const res = await fetch(`questions?language=${id}`)
   const questions = await res.json()
-  console.log(questions)
 
+  return questions
+}
+
+const renderQuiz = questions => {
   document.querySelectorAll('.card-body')
     .forEach((card, numQuestion) => {
-      card.querySelectorAll('h4')
-        .forEach(h4 => {
-          h4.lastElementChild.textContent = decodeHtml(questions[numQuestion].question)
-        })
+      card.querySelectorAll('h4 .question')
+        .forEach(span => span.textContent = decodeHtml(questions[numQuestion].question))
 
       card.querySelectorAll('input')
         .forEach((input, numAnswer) => {
           const label = input.nextElementSibling
-          input.value = questions[numQuestion].answers[numAnswer] // escape ?
+          input.value = questions[numQuestion].answers[numAnswer]
           input.id = `${numQuestion + 1}_${numAnswer + 1}`
           input.name = `question ${numQuestion + 1}`
 
@@ -77,6 +124,17 @@ const loadQuiz = async a => {
           label.textContent = decodeHtml(questions[numQuestion].answers[numAnswer])
         })
     })
+}
 
-    button.disabled = false
+const getUser = async () => {
+  const res = await fetch("user")
+
+  if (res.status === 200) {
+    const user = await res.json()
+
+    if (user.picture && user.givenName) {
+      document.querySelector('#dropdown-user img').src = user.picture
+      document.querySelector('#dropdown-user span').textContent = user.givenName
+    }
+  }
 }
