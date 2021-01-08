@@ -21,6 +21,8 @@ In order to have all microservices running correctly and integrated with the app
 
 Next, you will need to create the services mentioned before. Once created, you can generate credentials for local use, generated as a JSON file. You should get the `"apikey"` and the `"url"` from each service and copy them in their corresponding properties file of [resources](src/main/resources). Remember to remove "template" from the filenames.
 
+The App ID service is more complicated. I recommend reading the documentation and watching some videos of this [YouTube playlist](https://www.youtube.com/playlist?list=PLbAYXkuqwrX2WLQqR0LUtjT77d4hisvfK).
+
 Finally, and assuming that [Java 1.8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) and [Maven](https://maven.apache.org/download.cgi) are correctly installed, you can clone this repository and run the following commands in a terminal:
 
 ```
