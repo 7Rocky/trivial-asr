@@ -44,6 +44,11 @@ public class ResultsServlet extends HttpServlet {
     }
 
     User allUsers = store.getBySub(User.ALL_USERS_SUB);
+
+    if (allUsers == null) {
+      allUsers = store.persist(new User("", "", User.ALL_USERS_SUB, "", ""));
+    }
+
     allUsers.updateStats(quiz.getCategory(), correctlyAnswered);
     store.update(allUsers.get_id(), allUsers);
 

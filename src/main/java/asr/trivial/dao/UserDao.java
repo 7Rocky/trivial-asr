@@ -36,9 +36,7 @@ public class UserDao {
 
     try {
       client = ClientBuilder.url(new URL(url)).build();
-    } catch (Exception e) {
-      System.out.println("Unable to connect to database");
-    }
+    } catch (Exception e) { }
 
     return client;
   }
@@ -71,16 +69,16 @@ public class UserDao {
     return users.get(0);
   }
 
-  public User persist(User td) {
-    String id = db.save(td).getId();
+  public User persist(User user) {
+    String id = db.save(user).getId();
 
-    return db.find(User.class, id);
+    return db.find(User.class, user);
   }
 
   public User update(String id, User newUser) {
-    User visitor = db.find(User.class, id);
-    visitor.setStats(newUser.getStats());
-    db.update(visitor);
+    User user = db.find(User.class, id);
+    user.setStats(newUser.getStats());
+    db.update(user);
 
     return db.find(User.class, id);
   }
