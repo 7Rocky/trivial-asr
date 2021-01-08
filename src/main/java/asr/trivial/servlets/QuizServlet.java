@@ -1,5 +1,10 @@
 package asr.trivial.servlets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import javax.servlet.ServletException;
 
 import javax.servlet.annotation.WebServlet;
@@ -7,11 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
 
@@ -37,12 +37,15 @@ public class QuizServlet extends HttpServlet {
     case "/quiz":
       int category = request.getParameter("category") == null ?
         -1 : Integer.parseInt(request.getParameter("category"));
+
       String difficulty = request.getParameter("difficulty");
 
       if (Category.isValid(category) && Difficulty.isValid(difficulty)) {
         quiz = Trivial.getTrivial(category, difficulty);
 
         request.getSession(true).setAttribute("quiz", quiz);
+        request.getSession().setAttribute("selectedLanguage", SelectedLanguage.ENGLISH);
+
         request.getRequestDispatcher("/quiz.jsp").forward(request, response);
       } else {
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -51,7 +54,7 @@ public class QuizServlet extends HttpServlet {
       break;
 
     case "/questions":
-      quiz = (Quiz) request.getSession().getAttribute("quiz");
+      quiz = (Quiz) request.getSession(true).getAttribute("quiz");
 
       if (quiz == null) {
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -63,9 +66,8 @@ public class QuizServlet extends HttpServlet {
         }
 
         if (SelectedLanguage.isValid(language)) {
-          System.out.println(quiz);
           Translator.translate(quiz, language);
-          System.out.println(quiz);
+          request.getSession().setAttribute("selectedLanguage", SelectedLanguage.getSelectedLanguage(language));
         }
 
         JsonObject quizJson = (JsonObject) JsonParser.parseString(new Gson().toJson(quiz));
@@ -78,7 +80,7 @@ public class QuizServlet extends HttpServlet {
       break;
 
     case "/audio":
-      quiz = (Quiz) request.getSession().getAttribute("quiz");
+      quiz = (Quiz) request.getSession(true).getAttribute("quiz");
       SelectedLanguage selectedLanguage = (SelectedLanguage) request.getSession().getAttribute("selectedLanguage");
 
       int questionId = Integer.parseInt(request.getParameter("q"));
@@ -86,14 +88,11 @@ public class QuizServlet extends HttpServlet {
 
       byte[] bytes = Dictator.getAudio(question, selectedLanguage.getVoice());
 
+      response.setHeader("Content-Type", "audio/ogg");
       response.getOutputStream().write(bytes);
 
       break;
     }
-  }
-
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doGet(request, response);
   }
 
 }

@@ -1,13 +1,16 @@
 package asr.trivial.services;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.IamAuthenticator;
 
 import com.ibm.watson.text_to_speech.v1.TextToSpeech;
+
 import com.ibm.watson.text_to_speech.v1.model.SynthesizeOptions;
+
 import com.ibm.watson.text_to_speech.v1.util.WaveUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import asr.trivial.dao.VCAPHelper;
 
@@ -33,19 +36,21 @@ public class Dictator {
   }
 
   public static byte[] getAudio(String text, String language) {
-    IamAuthenticator authenticator = new IamAuthenticator(Dictator.getApikey());
+    Authenticator authenticator = new IamAuthenticator(Dictator.getApikey());
     TextToSpeech textToSpeech = new TextToSpeech(authenticator);
     textToSpeech.setServiceUrl(Dictator.getUrl());
 
     byte[] bytes = null;
 
     SynthesizeOptions synthesizeOptions = new SynthesizeOptions.Builder()
-      .text(text)
-      .accept("audio/mp3")
-      .voice(language)
-      .build();
+                                                               .text(text)
+                                                               .accept("audio/ogg")
+                                                               .voice(language)
+                                                               .build();
 
-    InputStream inputStream = textToSpeech.synthesize(synthesizeOptions).execute().getResult();
+    InputStream inputStream = textToSpeech.synthesize(synthesizeOptions)
+                                          .execute()
+                                          .getResult();
 
     try {
       bytes = WaveUtils.toByteArray(inputStream);

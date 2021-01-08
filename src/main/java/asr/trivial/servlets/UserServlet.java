@@ -7,9 +7,6 @@ import com.ibm.websphere.security.WSSecurityException;
 
 import com.ibm.websphere.security.auth.WSSubject;
 
-import asr.trivial.dao.UserDao;
-import asr.trivial.domain.User;
-
 import javax.security.auth.Subject;
 
 import javax.servlet.ServletException;
@@ -25,7 +22,11 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Hashtable;
 
-@WebServlet(urlPatterns="/api/user")
+import asr.trivial.dao.UserDao;
+
+import asr.trivial.domain.User;
+
+@WebServlet(urlPatterns="/user")
 public class UserServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
@@ -43,38 +44,36 @@ public class UserServlet extends HttpServlet {
     Object idTokenObj = privateCredentials.get("id_token");
 
     if (idTokenObj == null) {
-      response.setStatus(401);
-      response.getWriter().println("Unauthorized");
-      return;
+      response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    } else {
+      String payloadString = idTokenObj.toString().split("\\.")[1];
+      byte[] decodedPayload = Base64.getUrlDecoder().decode(payloadString);
+      String decodedPayloadString = new String(decodedPayload);
+      JsonObject userJson = (JsonObject) JsonParser.parseString(decodedPayloadString);
+
+      UserDao store = new UserDao();
+      User user = store.getBySub(userJson.get("sub").getAsString());
+
+      if (user == null) {
+        String givenName = userJson.get("given_name").getAsString();
+        String familyName = userJson.get("family_name").getAsString();
+        String sub = userJson.get("sub").getAsString();
+        String email = userJson.get("email").getAsString();
+        String picture = userJson.has("picture") ? userJson.get("picture").getAsString() : User.DEFAULT_PICTURE;
+
+        user = new User(givenName, familyName, sub, email, picture);
+        store.persist(user);
+      }
+
+      request.getSession(true).setAttribute("user", user);
+
+      userJson = new JsonObject();
+      userJson.addProperty("givenName", user.getGivenName());
+      userJson.addProperty("picture", user.getPicture());
+
+      response.addHeader("Content-Type", "application/json");
+      response.getWriter().println(userJson.toString());
     }
-
-    String payloadString = idTokenObj.toString().split("\\.")[1];
-    byte[] decodedPayload = Base64.getUrlDecoder().decode(payloadString);
-    String decodedPayloadString = new String(decodedPayload);
-    JsonObject userJson = (JsonObject) JsonParser.parseString(decodedPayloadString);
-
-    UserDao store = new UserDao();
-    User user = store.getBySub(userJson.get("sub").getAsString());
-
-    if (user == null) {
-      System.out.println("USER IS NULL");
-      String givenName = userJson.get("given_name").getAsString();
-      String familyName = userJson.get("family_name").getAsString();
-      String sub = userJson.get("sub").getAsString();
-      String email = userJson.get("email").getAsString();
-      String picture = userJson.has("picture") ? userJson.get("picture").getAsString() : "FAKE";
-
-      user = new User(givenName, familyName, sub, email, picture);
-      store.persist(user);
-    }
-
-    request.getSession(true).setAttribute("user", user);
-
-    JsonObject responseJson = new JsonObject();
-    responseJson.add("user", userJson);//userJson);
-
-    response.addHeader("Content-Type", "application/json");
-    response.getWriter().println(responseJson.toString());
   }
 
 }

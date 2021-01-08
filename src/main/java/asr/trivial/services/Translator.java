@@ -1,9 +1,5 @@
 package asr.trivial.services;
 
-import java.util.Collection;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,13 +11,21 @@ import com.ibm.watson.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.language_translator.v3.model.TranslateOptions;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 
+import java.util.Collection;
+import java.util.TreeSet;
+
+import java.util.stream.Collectors;
+
 import asr.trivial.dao.VCAPHelper;
+
 import asr.trivial.domain.Quiz;
+
 import asr.trivial.domain.enums.SelectedLanguage;
 
 public class Translator {
 
   private static String apikey = "";
+  private static String url = "";
 
   public static String getApikey() {
     if (Translator.apikey.length() == 0) {
@@ -29,6 +33,14 @@ public class Translator {
     }
 
     return Translator.apikey;
+  }
+
+  public static String getUrl() {
+    if (Translator.url.length() == 0) {
+      Translator.url = VCAPHelper.getProperty("language_translator", "url");
+    }
+
+    return Translator.url;
   }
 
   public static void translate(Quiz quiz, final String toLanguage) {
@@ -55,7 +67,11 @@ public class Translator {
     Authenticator authenticator = new IamAuthenticator(Translator.getApikey());
     LanguageTranslator languageTranslator = new LanguageTranslator("2018-05-01", authenticator);
 
-    languageTranslator.setServiceUrl("https://gateway-lon.watsonplatform.net/language-translator/api");
+    languageTranslator.setServiceUrl(Translator.getUrl());
+
+    text = text.replace("&quot;", "\"")
+               .replace("&#034;", "\"")
+               .replace("&#039;", "'");
 
     TranslateOptions translateOptions = new TranslateOptions.Builder()
       .addText(text)
@@ -73,6 +89,10 @@ public class Translator {
     if (translations.size() > 0) {
       translation = translations.get(0).getAsJsonObject().get("translation").getAsString();
     }
+
+    translation = translation.replace("\"", "&quot;")
+                             .replace("\"", "&#034;")
+                             .replace("'", "&#039;");
 
     return translation;
   }
