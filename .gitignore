@@ -3,6 +3,8 @@ src/main/liberty/config/server.xml
 /src/main/resources/*
 !/src/main/resources/*.template.properties
 
+wlp/
+
 .DS_Store
 
 # Eclipse
