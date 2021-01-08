@@ -72,7 +72,7 @@ public class UserDao {
   public User persist(User user) {
     String id = db.save(user).getId();
 
-    return db.find(User.class, user);
+    return db.find(User.class, id);
   }
 
   public User update(String id, User newUser) {
