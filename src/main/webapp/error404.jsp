@@ -3,6 +3,13 @@
 <html lang="en">
   <head>
     <%@ include file="head.jsp" %>
+    <style>
+      footer {
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <%@ include file="navbar.jsp" %>
