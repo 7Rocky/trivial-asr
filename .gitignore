@@ -1,7 +1,7 @@
 src/main/liberty/config/server.xml
 
 /src/main/resources/*
-!/src/main/resources/*.template
+!/src/main/resources/*.template.properties
 
 .DS_Store
 

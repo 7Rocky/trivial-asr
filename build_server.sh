@@ -1,4 +1,4 @@
-mv src/main/liberty/config/server.xml.template src/main/liberty/config/server.xml
+mv src/main/liberty/config/server.template.xml src/main/liberty/config/server.xml
 
 mvn clean install
 mvn -B package

@@ -1,7 +1,7 @@
 <!--
   These properties are meant for local development only and will not be read when application is running in Bluemix.
   When running in Bluemix, the credentials of bound services are available in the VCAP_SERVICES environment variable.
-  Remove the suffix ".template" to use this file properly
+  Remove the suffix ".template" to the filename to use this file properly
 -->
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="ASR Trivial">
@@ -19,6 +19,7 @@
     httpsPort="9443"
     id="defaultHttpEndpoint"
   />
+  <httpSession cookieSameSite="None" />
   <keyStore
     id="defaultKeyStore"
     password="password"
@@ -33,7 +34,7 @@
     clientSecret="AppId-clientSecret"
     discoveryEndpointUrl="AppId-discoveryEndpointUrl"
     httpsRequired="false"
-    id="oidc-client-simple-liberty-web-app"
+    id="trivial-asr-app-id"
     redirectToRPHostAndPort="http://localhost:9080"
     signatureAlgorithm="RS256"
     sslRef="oidcClientSSL"
