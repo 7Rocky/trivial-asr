@@ -49,6 +49,14 @@ const putAudio = button => {
   audio.controls = true
   audio.autoplay = true
 
+  audio.addEventListener('error', () => {
+    const modal = new bootstrap.Modal(document.getElementById('text-to-speech-error'), {
+      keyboard: false
+    })
+
+    modal.show()
+  })
+
   parent.querySelector('h4').after(audio)
   parent.removeChild(parent.querySelector('button'))
 }

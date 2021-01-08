@@ -77,6 +77,20 @@
         </div>
       </form>
     </div>
+    <div aria-hidden="true" aria-labelledby="modal-lavel" class="fade modal" id="text-to-speech-error" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="bg-dark border-info modal-content text-white">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-lavel">Text to Speech</h5>
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="filter: invert(100%);" type="button"></button>
+          </div>
+          <div class="modal-body">The IBM Watson Text to Speech service is not available right now. Please, try again later...</div>
+          <div class="modal-footer">
+            <button class="btn btn-info" data-bs-dismiss="modal" type="button">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <%@ include file="footer.jsp" %>
   </body>
 </html>
