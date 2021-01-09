@@ -2,22 +2,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%@ include file="head.jsp" %>
+    <%@ include file="/include/head.jsp" %>
     <style>
       footer {
         bottom: 0;
-        position: absolute;
+        position: fixed;
         width: 100%;
+      }
+      .container {
+        margin-bottom: 15% !important;
       }
     </style>
   </head>
   <body>
-    <%@ include file="navbar.jsp" %>
+    <%@ include file="/include/navbar.jsp" %>
     <div class="container">
       <div class="img-blurred-edge text-center">
-        <img src="/img/404.gif">
+        <img alt="500: Internal Server Error" src="/img/500.gif" style="filter: invert(100%);">
       </div>
     </div>
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/include/footer.jsp" %>
   </body>
 </html>
