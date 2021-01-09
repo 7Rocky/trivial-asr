@@ -9,16 +9,88 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>AudioServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.AudioServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AudioServlet</servlet-name>
+    <url-pattern>/audio</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>QuestionsServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.QuestionsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuestionsServlet</servlet-name>
+    <url-pattern>/questions</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>QuizServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.QuizServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuizServlet</servlet-name>
+    <url-pattern>/quiz</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ResultsServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.ResultsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResultsServlet</servlet-name>
+    <url-pattern>/results</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>StatsServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.StatsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatsServlet</servlet-name>
+    <url-pattern>/stats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>asr.trivial.servlets.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>asr.trivial.filters.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <error-page>
     <error-code>404</error-code>
-    <location>/error404.jsp</location>
+    <location>/error/error404.jsp</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
-    <location>/error500.jsp</location>
+    <location>/error/error500.jsp</location>
   </error-page>
   <security-role>
-    <role-name>myrole</role-name>
+    <role-name>users</role-name>
   </security-role>
   <security-constraint>
     <display-name>Security Constraints</display-name>
@@ -34,7 +106,7 @@
       <http-method>OPTIONS</http-method>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>myrole</role-name>
+      <role-name>users</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
