@@ -7,10 +7,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%@ include file="head.jsp" %>
+    <%@ include file="/include/head.jsp" %>
   </head>
   <body>
-    <%@ include file="navbar.jsp" %>
+    <%@ include file="/include/navbar.jsp" %>
     <div class="container mb-5">
       <%
         User user = (User) session.getAttribute("user");
@@ -68,6 +68,6 @@
         %>
       </div>
     </div>
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/include/footer.jsp" %>
   </body>
 </html>

@@ -7,10 +7,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%@ include file="head.jsp" %>
+    <%@ include file="/include/head.jsp" %>
   </head>
   <body>
-    <%@ include file="navbar.jsp" %>
+    <%@ include file="/include/navbar.jsp" %>
     <div class="container">
       <%
         Quiz quiz = (Quiz) session.getAttribute("quiz");
@@ -46,7 +46,7 @@
             <div class="p-2 w-100">
               <h4 class="card-title mb-4">
                 <span class="badge bg-info question-number rounded-pill text-center text-dark"><%= i + 1 %></span>
-                <span class="question"><%= questions.get(i).getQuestion() %></span>
+                <span class="question"><%= questions.get(i).getQuestionTitle() %></span>
               </h4>
               <%
                 int j = 0;
@@ -91,6 +91,6 @@
         </div>
       </div>
     </div>
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/include/footer.jsp" %>
   </body>
 </html>

@@ -6,17 +6,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%@ include file="head.jsp" %>
+    <%@ include file="/include/head.jsp" %>
     <style>
       footer {
         bottom: 0;
-        position: absolute;
+        position: fixed;
         width: 100%;
       }
     </style>
   </head>
   <body>
-    <%@ include file="navbar.jsp" %>
+    <%@ include file="/include/navbar.jsp" %>
     <%
       User user = (User) session.getAttribute("user");
     %>
@@ -83,6 +83,6 @@
       </div>
       <br>
     </div>
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/include/footer.jsp" %>
   </body>
 </html>
