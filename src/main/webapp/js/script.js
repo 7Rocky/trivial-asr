@@ -6,7 +6,7 @@ const startLoading = () => {
 
   removeAudios()
 
-  document.querySelectorAll('.fa-volume-up').forEach(i => (i.parentNode.disabled = true))
+  document.querySelectorAll('.fa-volume-up').forEach(span => (span.parentNode.disabled = true))
 
   document.querySelectorAll('h4 .question').forEach(span => {
     span.innerHTML =
@@ -31,7 +31,7 @@ const stopLoading = () => {
   const button = document.getElementById('dropdown-languages')
   button.disabled = false
 
-  document.querySelectorAll('.fa-volume-up').forEach(i => (i.parentNode.disabled = false))
+  document.querySelectorAll('.fa-volume-up').forEach(span => (span.parentNode.disabled = false))
 
   document.querySelectorAll('label').forEach(label => {
     label.style.width = ''
@@ -63,7 +63,7 @@ const removeAudios = () => {
   document.querySelectorAll('audio').forEach(audio => {
     audio.parentNode.insertAdjacentHTML(
       'afterend',
-      '<button class="align-self-center btn d-flex text-white" onclick="putAudio(this)"><i class="fas fa-volume-up h1"></i></button>'
+      '<button class="align-self-center btn d-flex text-white" onclick="putAudio(this)"><span class="fas fa-volume-up h1"></span></button>'
     )
     audio.parentNode.removeChild(audio)
   })
