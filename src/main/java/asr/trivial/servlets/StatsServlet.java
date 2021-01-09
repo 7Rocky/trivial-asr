@@ -2,8 +2,6 @@ package asr.trivial.servlets;
 
 import javax.servlet.ServletException;
 
-import javax.servlet.annotation.WebServlet;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +12,14 @@ import asr.trivial.dao.UserDao;
 
 import asr.trivial.domain.User;
 
-@WebServlet(urlPatterns="/stats")
 public class StatsServlet extends HttpServlet {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -6027760521556652184L;
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
     UserDao store = new UserDao();
     User user = null;
 
@@ -30,7 +30,12 @@ public class StatsServlet extends HttpServlet {
     }
 
     request.getSession(true).setAttribute("user", user);
-    request.getRequestDispatcher("/stats.jsp").forward(request, response);
+
+    try {
+      request.getRequestDispatcher("/stats.jsp").forward(request, response);
+    } catch (IOException | ServletException e) {
+      e.printStackTrace();
+    }
   }
 
 }

@@ -51,12 +51,12 @@ public class Translator {
     }
 
     quiz.getQuestions().stream().forEach(question -> {
-      question.setQuestion(translate(question.getQuestion(), fromLanguage, toLanguage));
+      question.setQuestionTitle(translate(question.getQuestionTitle(), fromLanguage, toLanguage));
       question.setCorrectAnswer(translate(question.getCorrectAnswer(), fromLanguage, toLanguage));
 
-      Collection<String> newAnswers = question.getAnswers().stream()
-                                        .map(answer -> translate(answer, fromLanguage, toLanguage))
-                                        .collect(Collectors.toCollection(TreeSet::new));
+      Collection<String> newAnswers =
+          question.getAnswers().stream().map(answer -> translate(answer, fromLanguage, toLanguage))
+              .collect(Collectors.toCollection(TreeSet::new));
       question.setAnswers(newAnswers);
     });
 
@@ -69,17 +69,13 @@ public class Translator {
 
     languageTranslator.setServiceUrl(Translator.getUrl());
 
-    text = text.replace("&quot;", "\"")
-               .replace("&#034;", "\"")
-               .replace("&#039;", "'");
+    text = text.replace("&quot;", "\"").replace("&#034;", "\"").replace("&#039;", "'");
 
-    TranslateOptions translateOptions = new TranslateOptions.Builder()
-      .addText(text)
-      .source(fromLanguage)
-      .target(toLanguage)
-      .build();
+    TranslateOptions translateOptions = new TranslateOptions.Builder().addText(text)
+        .source(fromLanguage).target(toLanguage).build();
 
-    TranslationResult translationResult = languageTranslator.translate(translateOptions).execute().getResult();
+    TranslationResult translationResult =
+        languageTranslator.translate(translateOptions).execute().getResult();
 
     String translationJSON = translationResult.toString();
     JsonObject rootObj = JsonParser.parseString(translationJSON).getAsJsonObject();
@@ -90,9 +86,8 @@ public class Translator {
       translation = translations.get(0).getAsJsonObject().get("translation").getAsString();
     }
 
-    translation = translation.replace("\"", "&quot;")
-                             .replace("\"", "&#034;")
-                             .replace("'", "&#039;");
+    translation =
+        translation.replace("\"", "&quot;").replace("\"", "&#034;").replace("'", "&#039;");
 
     return translation;
   }

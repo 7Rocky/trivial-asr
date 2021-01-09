@@ -15,8 +15,12 @@ import java.util.Map.Entry;
 
 public class VCAPHelper {
 
-  static String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
-  
+  private static final String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
+
+  private VCAPHelper() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static boolean isProdEnv() {
     return VCAP_SERVICES != null;
   }
@@ -39,7 +43,7 @@ public class VCAPHelper {
     }
 
     obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
-    System.out.println("VCAP_SERVICES: Found " + (String) dbEntry.getKey());
+    System.out.println("VCAP_SERVICES: Found " + dbEntry.getKey());
 
     return (JsonObject) obj.get("credentials");
   }
@@ -56,7 +60,7 @@ public class VCAPHelper {
 
     return properties;
   }
-  
+
   public static String getProperty(String serviceName, String property) {
     String fileName = new StringBuilder(serviceName).append(".properties").toString();
     String value = "";
@@ -75,7 +79,8 @@ public class VCAPHelper {
       value = VCAPHelper.getLocalProperties(fileName).getProperty(property);
 
       if (value == null || value.length() == 0) {
-        System.out.println("To use a " + serviceName + ", set the " + property + " in src/main/resources/" + fileName);
+        System.out.println("To use a " + serviceName + ", set the " + property
+            + " in src/main/resources/" + fileName);
         return "";
       }
     }

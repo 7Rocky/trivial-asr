@@ -1,5 +1,7 @@
 package asr.trivial.domain;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,9 @@ import java.util.Map;
 
 import asr.trivial.domain.enums.Category;
 
-public class User {
+public class User implements Serializable {
+
+  private static final long serialVersionUID = -1905417122880553450L;
 
   public static final String ALL_USERS_SUB = "all_users_sub";
   public static final String DEFAULT_PICTURE = "/img/user.png";

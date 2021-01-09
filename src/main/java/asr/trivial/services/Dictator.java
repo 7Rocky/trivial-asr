@@ -19,6 +19,10 @@ public class Dictator {
   private static String apikey = "";
   private static String url = "";
 
+  private Dictator() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String getApikey() {
     if (Dictator.apikey.length() == 0) {
       Dictator.apikey = VCAPHelper.getProperty("text_to_speech", "apikey");
@@ -42,15 +46,10 @@ public class Dictator {
 
     byte[] bytes = null;
 
-    SynthesizeOptions synthesizeOptions = new SynthesizeOptions.Builder()
-                                                               .text(text)
-                                                               .accept("audio/ogg")
-                                                               .voice(language)
-                                                               .build();
+    SynthesizeOptions synthesizeOptions =
+        new SynthesizeOptions.Builder().text(text).accept("audio/ogg").voice(language).build();
 
-    InputStream inputStream = textToSpeech.synthesize(synthesizeOptions)
-                                          .execute()
-                                          .getResult();
+    InputStream inputStream = textToSpeech.synthesize(synthesizeOptions).execute().getResult();
 
     try {
       bytes = WaveUtils.toByteArray(inputStream);

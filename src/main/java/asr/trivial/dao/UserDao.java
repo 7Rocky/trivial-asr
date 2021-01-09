@@ -16,13 +16,13 @@ import asr.trivial.domain.User;
 public class UserDao {
 
   private Database db = null;
-  private static final String databaseName = VCAPHelper.isProdEnv() ? "users" : "users-test";
+  private static final String DATABASE_NAME = VCAPHelper.isProdEnv() ? "users" : "users-test";
 
   public UserDao() {
     CloudantClient cloudant = createClient();
 
     if (cloudant != null) {
-      db = cloudant.database(databaseName, true);
+      db = cloudant.database(DATABASE_NAME, true);
     }
   }
 
@@ -36,7 +36,9 @@ public class UserDao {
 
     try {
       client = ClientBuilder.url(new URL(url)).build();
-    } catch (Exception e) { }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     return client;
   }
@@ -45,8 +47,11 @@ public class UserDao {
     List<User> docs = null;
 
     try {
-      docs = db.getAllDocsRequestBuilder().includeDocs(true).build().getResponse().getDocsAs(User.class);
-    } catch (IOException e) { }
+      docs = db.getAllDocsRequestBuilder().includeDocs(true).build().getResponse()
+          .getDocsAs(User.class);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     return docs;
   }
@@ -54,13 +59,12 @@ public class UserDao {
   public User get(String id) {
     return db.find(User.class, id);
   }
-  
+
   public User getBySub(String sub) {
-    List<User> users = db.query(
-        new StringBuilder("{\"selector\":{\"sub\":\"").append(sub).append("\"}}").toString(),
-        User.class
-      )
-      .getDocs();
+    List<User> users = db
+        .query(new StringBuilder("{\"selector\":{\"sub\":\"").append(sub).append("\"}}").toString(),
+            User.class)
+        .getDocs();
 
     if (users.isEmpty()) {
       return null;

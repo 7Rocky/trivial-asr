@@ -7,10 +7,10 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -28,35 +28,50 @@ public class Trivial {
 
   private static final String API_URL = "https://opentdb.com/api.php";
 
+  private Trivial() {
+    throw new IllegalStateException("Utility class");
+  }
+
   private static String queryString(int category, String difficulty) {
-    return new StringBuilder("?")
-      .append("amount=").append(Quiz.AMOUNT).append("&")
-      .append("category=").append(category).append("&")
-      .append("dificulty").append(difficulty).append("&")
-      .append("type=").append(Quiz.TYPE).toString();
+    return new StringBuilder("?").append("amount=").append(Quiz.AMOUNT).append("&")
+        .append("category=").append(category).append("&").append("dificulty").append(difficulty)
+        .append("&").append("type=").append(Quiz.TYPE).toString();
   }
 
   public static Quiz getTrivial(int category, String difficulty) {
     Quiz quiz = new Quiz(Category.getCategory(category), Difficulty.getDifficulty(difficulty));
     quiz.setSelectedLanguage(SelectedLanguage.ENGLISH);
 
-    String requestUrl = new StringBuilder(API_URL).append(queryString(category, difficulty)).toString();
-    HttpURLConnection conn = null;
+    String requestUrl =
+        new StringBuilder(API_URL).append(queryString(category, difficulty)).toString();
+
+    HttpURLConnection connection = null;
 
     try {
       URL url = new URL(requestUrl);
 
-      conn = (HttpURLConnection) url.openConnection();
-      conn.setRequestMethod("GET");
-      conn.setRequestProperty("Accept", "application/json");
+      connection = (HttpURLConnection) url.openConnection();
+      connection.setRequestMethod("GET");
+      connection.setRequestProperty("Accept", "application/json");
 
-      if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-        throw new RuntimeException("Failed: HTTP Error code: " + conn.getResponseCode());
+      if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+        Trivial.setQuiz(quiz, connection.getInputStream());
       }
 
-      BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
 
-      JsonObject response = JsonParser.parseString(br.readLine()).getAsJsonObject();
+    return quiz;
+  }
+
+  private static void setQuiz(Quiz quiz, InputStream inputStream) {
+    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+      JsonObject response = JsonParser.parseString(bufferedReader.readLine()).getAsJsonObject();
       JsonArray results = response.getAsJsonArray("results");
 
       Iterator<JsonElement> questionsIt = results.iterator();
@@ -69,24 +84,18 @@ public class Trivial {
 
         List<String> answers = new ArrayList<>();
 
-        Iterator<JsonElement> answersIt = jsonQuestion.getAsJsonArray("incorrect_answers").iterator();
+        Iterator<JsonElement> answersIt =
+            jsonQuestion.getAsJsonArray("incorrect_answers").iterator();
 
-        while(answersIt.hasNext()) {
+        while (answersIt.hasNext()) {
           answers.add(answersIt.next().getAsString());
         }
 
         quiz.addQuestion(new Question(question, correctAnswer, answers));
       }
-
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
-    } finally {
-      conn.disconnect();
     }
-
-    return quiz;
   }
 
 }
