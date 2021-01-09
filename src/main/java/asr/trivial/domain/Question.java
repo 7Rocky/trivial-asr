@@ -1,23 +1,27 @@
 package asr.trivial.domain;
 
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.TreeSet;
 
-public class Question {
+public class Question implements Serializable {
 
-  private String question;
+  private static final long serialVersionUID = 5094716942315511592L;
+
+  private String questionTitle;
   private String correctAnswer;
   private Collection<String> answers = new TreeSet<>();
 
-  public Question(String question, String correctAnswer, Collection<String> answers) {
-    this.setQuestion(question);
+  public Question(String questionTitle, String correctAnswer, Collection<String> answers) {
+    this.setQuestionTitle(questionTitle);
     this.setCorrectAnswer(correctAnswer);
     this.addAnswer(correctAnswer);
     this.addAllAnswers(answers);
   }
 
-  public String getQuestion() {
-    return question;
+  public String getQuestionTitle() {
+    return questionTitle;
   }
 
   public String getCorrectAnswer() {
@@ -28,8 +32,8 @@ public class Question {
     return answers;
   }
 
-  public void setQuestion(String question) {
-    this.question = question;
+  public void setQuestionTitle(String questionTitle) {
+    this.questionTitle = questionTitle;
   }
 
   public void setCorrectAnswer(String correctAnswer) {
