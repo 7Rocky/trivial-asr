@@ -10,7 +10,7 @@ This web application is based in the following microservices, provided by IBM Cl
 
 - [Cloudant NoSQL Database](https://www.ibm.com/cloud/cloudant)
 - [Watson Language Translator](https://www.ibm.com/cloud/watson-language-translator)
-- [Watson Language Text to Speech](https://www.ibm.com/cloud/watson-text-to-speech)
+- [Watson Text to Speech](https://www.ibm.com/cloud/watson-text-to-speech)
 - [App ID](https://www.ibm.com/cloud/app-id)
 
 Moreover, it uses IBM Cloud CI/CD tools to use DevOps and improve the coding experience.
