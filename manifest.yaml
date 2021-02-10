@@ -4,7 +4,7 @@ applications:
   disk_quota: 1G
   env:
     JAVA_OPTS: -Xss228k -XX:ReservedCodeCacheSize=100M
-  healt-check-type: port
+  health-check-type: port
   instances: 1
   memory: 512M
   name: trivial-asr
